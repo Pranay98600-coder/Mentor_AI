@@ -140,5 +140,5 @@ In Progress:
 
 ## Author
 
-Your Name  
+Pranay Salunkhe  
 Java Full Stack Developer  

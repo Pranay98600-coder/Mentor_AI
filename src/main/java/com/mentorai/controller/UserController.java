@@ -22,4 +22,17 @@ public class UserController {
 
         return userService.getCurrentUser(email);
     }
+    
+    @GetMapping("/api/user/dashboard")
+    public String userDashboard() {
+
+        return "Welcome USER";
+    }
+    
+    
+
+        @GetMapping("/dashboard")
+        public String dashboard() {
+            return "Welcome USER dashboard";
+        }
 }

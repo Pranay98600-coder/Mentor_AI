@@ -14,6 +14,8 @@ MentorAI Backend is a Spring Boot REST API that provides authentication and user
 - JWT Authentication
 - Maven
 
+AI Integration:
+• Google Gemini API (setup completed, fallback roadmap used during development)
 ---
 
 ## Features Implemented

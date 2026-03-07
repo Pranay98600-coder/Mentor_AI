@@ -1,146 +1,289 @@
-# MentorAI Backend (Spring Boot + JWT)
+# MentorAI Backend (Spring Boot + JWT + AI Learning Platform)
 
-MentorAI Backend is a Spring Boot REST API that provides authentication and user management using JWT (JSON Web Token) and Spring Security.
+MentorAI Backend is a Spring Boot REST API that provides authentication, roadmap generation, and learning progress tracking for an AI-powered learning assistant platform.
+
+The system allows users to register, log in securely using JWT authentication, generate learning roadmaps, and track their learning progress over time.
 
 ---
 
-## Tech Stack
+# Tech Stack
 
+Backend
 - Java 21
 - Spring Boot 4
 - Spring Security
 - Spring Data JPA
-- MySQL
-- JWT Authentication
 - Maven
 
-AI Integration:
-• Google Gemini API (setup completed, fallback roadmap used during development)
+Database
+- MySQL
+
+Security
+- JWT Authentication
+- BCrypt Password Encryption
+
+AI Integration
+- Google Gemini API (setup completed)
+- Fallback roadmap generator used during development
+
 ---
 
-## Features Implemented
+# Features Implemented
 
+Authentication & Security
 - User Registration
 - User Login
 - Password Encryption using BCrypt
 - JWT Token Generation
 - JWT Authentication Filter
 - Stateless Authentication
-- Secure API Endpoints
-- MySQL Database Integration
+- Role Based Authorization (USER / ADMIN)
+
+Learning System
+- Roadmap Generation API
+- Roadmap Storage in Database
+- Learning Progress Tracking
+
+Admin APIs
+- View users
+- Delete users
+- Promote USER → ADMIN
+
+Database
+- MySQL Integration using Spring Data JPA
 
 ---
 
-## Project Structure
+# Project Structure
+
+
 com.mentorai
 │
 ├── config
 │ └── SecurityConfig.java
 │
 ├── controller
-│ └── AuthController.java
+│ ├── AuthController.java
+│ ├── RoadmapController.java
+│ └── ProgressController.java
+│
+├── dto
+│ └── ProgressRequest.java
 │
 ├── model
 │ ├── User.java
-│ └── Role.java
+│ ├── Role.java
+│ ├── Roadmap.java
+│ └── TopicProgress.java
 │
 ├── repository
-│ └── UserRepository.java
+│ ├── UserRepository.java
+│ ├── RoadmapRepository.java
+│ └── TopicProgressRepository.java
 │
 ├── security
 │ ├── JwtAuthenticationFilter.java
 │ └── JwtUtil.java
 │
 ├── service
-│ └── AuthService.java
+│ ├── AuthService.java
+│ ├── RoadmapService.java
+│ └── ProgressService.java
 │
 └── MentoraiBackendApplication.java
 
 
 ---
 
-## API Endpoints
+# API Endpoints
 
-### 1. Register User
+## 1️⃣ Register User
 
-**POST**
+POST  
+
 http://localhost:8081/api/auth/register
 
-** Request Body **
+
+Request Body
+
+
 {
 "name": "Rahul",
-"email": "rahul@gmail.com",
+"email": "rahul@gmail.com
+",
 "password": "1234"
 }
 
-**Response**
-User Register Successfully
+
+Response
+
+
+User registered successfully
 
 
 ---
 
-### 2. Login User
+# 2️⃣ Login User
 
-**POST**
+POST
+
+
 http://localhost:8081/api/auth/login
 
 
-**Request Body**
+Request Body
+
+
 {
-"email": "rahul@gmail.com",
+"email": "rahul@gmail.com
+",
 "password": "1234"
 }
 
-**Response**
+
+Response
+
+
 JWT Token
 
 
 ---
 
-## JWT Authentication Flow
+# 3️⃣ Generate Learning Roadmap
 
-1. User registers using /api/auth/register
-2. User logs in using /api/auth/login
+POST
+
+
+http://localhost:8081/api/roadmap/generate
+
+
+Header
+
+
+Authorization: Bearer YOUR_TOKEN
+
+
+Request Body
+
+
+{
+"topic": "Spring Boot"
+}
+
+
+Response
+
+
+Generated roadmap saved in database
+
+
+---
+
+# 4️⃣ Update Learning Progress
+
+POST
+
+
+http://localhost:8081/api/progress/update
+
+
+Header
+
+
+Authorization: Bearer YOUR_TOKEN
+
+
+Request Body
+
+
+{
+"topic": "Spring Security",
+"knowledgeBefore": 2,
+"knowledgeAfter": 8
+}
+
+
+Response
+
+
+Progress saved successfully
+
+
+---
+
+# JWT Authentication Flow
+
+1. User registers using `/api/auth/register`
+2. User logs in using `/api/auth/login`
 3. Server verifies credentials
 4. Server generates JWT token
 5. Client stores token
 6. Client sends token in Authorization header
 
-7. Spring Security validates token
+
+Authorization: Bearer TOKEN
+
+
+7. JWT filter validates token
 8. User gets access to secured endpoints
 
 ---
 
-## How to Run Project
+# Database Tables
+
+The system currently uses the following tables:
+
+
+users
+roadmap
+topic_progress
+
+
+---
+
+# How to Run Project
 
 Step 1 — Open terminal in project folder
 
-Step 2 — Run:
-
-Step 3 — Server will start at:
+Step 2 — Run
 
 
----
+mvn spring-boot:run
 
-## Current Status
 
-Completed:
+Step 3 — Server starts at
 
-- Registration
-- Login
-- JWT generation
-- JWT validation
-- Spring Security integration
 
-In Progress:
+http://localhost:8081
 
-- Get current user endpoint
-- Role based authorization
-- Roadmap feature APIs
 
 ---
 
-## Author
+# Current Project Status
+
+Completed
+
+- User Registration
+- User Login
+- JWT Authentication
+- Role Based Authorization
+- Roadmap Generation
+- Roadmap Storage
+- Learning Progress Tracking
+- Admin APIs
+- MySQL Database Integration
+
+Upcoming Features
+
+- AI Chat Assistant
+- React Frontend
+- Roadmap Visualization UI
+- Progress Analytics Dashboard
+- Deployment
+
+---
+
+# Author
 
 Pranay Salunkhe  
-Java Full Stack Developer  
+Java Full Stack Developer

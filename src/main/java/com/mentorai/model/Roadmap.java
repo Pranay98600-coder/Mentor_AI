@@ -1,6 +1,8 @@
 package com.mentorai.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Roadmap {
@@ -9,10 +11,15 @@ public class Roadmap {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    private String roadmapJson;
+    private String mainTopic;
 
+    private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "roadmap", cascade = CascadeType.ALL)
+    private List<RoadmapTopic> topics;
+    
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Roadmap() {}
@@ -21,14 +28,30 @@ public class Roadmap {
         return id;
     }
 
-    public String getRoadmapJson() {
-        return roadmapJson;
+    public String getMainTopic() {
+        return mainTopic;
     }
 
-    public void setRoadmapJson(String roadmapJson) {
-        this.roadmapJson = roadmapJson;
+    public void setMainTopic(String mainTopic) {
+        this.mainTopic = mainTopic;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public List<RoadmapTopic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<RoadmapTopic> topics) {
+        this.topics = topics;
+    }
+    
     public User getUser() {
         return user;
     }

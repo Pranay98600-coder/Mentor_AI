@@ -1,0 +1,7 @@
+/* Landing Page Styles */
+.landing-page {
+  min-height: 100vh;
+  background: #f8fbff;
+  display: flex;
+  flex-direction: column;
+}

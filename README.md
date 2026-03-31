@@ -1,256 +1,160 @@
-🚀 MentorAI – Full Stack AI Learning Platform
+MentorAI Backend (Spring Boot + JWT + AI Learning Platform)
+MentorAI Backend is a Spring Boot REST API that provides authentication, roadmap generation, and learning progress tracking for an AI-powered learning assistant platform.
 
-MentorAI is an AI-powered learning assistant that helps users generate personalized learning roadmaps, track progress, and access curated YouTube resources — all in one platform.
+The system allows users to register, log in securely using JWT authentication, generate learning roadmaps, and track their learning progress over time.
 
-It combines Spring Boot backend + React frontend with JWT-based authentication to deliver a complete full-stack learning system.
+Tech Stack
+Backend
 
----
+Java 21
+Spring Boot 4
+Spring Security
+Spring Data JPA
+Maven
+Database
 
-🧠 Key Features
+MySQL
+Security
 
-🔐 Authentication & Security
+JWT Authentication
+BCrypt Password Encryption
+AI Integration
 
-- User Registration & Login
-- JWT Token-Based Authentication
-- Stateless Security Architecture
-- Password Encryption using BCrypt
-- Role-Based Authorization (USER / ADMIN)
+Google Gemini API (setup completed)
+Fallback roadmap generator used during development
+Features Implemented
+Authentication & Security
 
----
+User Registration
+User Login
+Password Encryption using BCrypt
+JWT Token Generation
+JWT Authentication Filter
+Stateless Authentication
+Role Based Authorization (USER / ADMIN)
+Learning System
 
-🗺️ AI-Powered Learning System
+Roadmap Generation API
+Roadmap Storage in Database
+Learning Progress Tracking
+Admin APIs
 
-- Personalized Roadmap Generation
-- Topic-wise Learning Structure
-- YouTube Video Recommendations per topic
-- Fallback roadmap logic (for development phase)
+View users
+Delete users
+Promote USER → ADMIN
+Database
 
----
+MySQL Integration using Spring Data JPA
+Project Structure
+com.mentorai │ ├── config │ └── SecurityConfig.java │ ├── controller │ ├── AuthController.java │ ├── RoadmapController.java │ └── ProgressController.java │ ├── dto │ └── ProgressRequest.java │ ├── model │ ├── User.java │ ├── Role.java │ ├── Roadmap.java │ └── TopicProgress.java │ ├── repository │ ├── UserRepository.java │ ├── RoadmapRepository.java │ └── TopicProgressRepository.java │ ├── security │ ├── JwtAuthenticationFilter.java │ └── JwtUtil.java │ ├── service │ ├── AuthService.java │ ├── RoadmapService.java │ └── ProgressService.java │ └── MentoraiBackendApplication.java
 
-📊 Progress Tracking
-
-- Track knowledge before and after learning
-- Topic-wise progress updates
-- Persistent progress storage in database
-
----
-
-🧾 User Dashboard (Frontend)
-
-- Clean UI with Dashboard & Sidebar
-- Empty state for new users (Generate Roadmap)
-- Display saved roadmaps for existing users
-- Protected routes using JWT
-
----
-
-🛠️ Admin Features
-
-- View all users
-- Delete users
-- Promote USER → ADMIN
-
----
-
-🛠️ Tech Stack
-
-💻 Backend
-
-- Java 21
-- Spring Boot
-- Spring Security (JWT)
-- Spring Data JPA
-- Maven
-
-🎨 Frontend
-
-- React.js
-- Axios
-- CSS (Modular styling)
-
-🗄️ Database
-
-- MySQL
-
-🤖 AI & External APIs
-
-- Google Gemini API (setup done, fallback used)
-- YouTube Data API (for video recommendations)
-
----
-
-📂 Project Structure
-
-MentorAI/
-├── mentorai-backend/
-│   ├── config/
-│   ├── controller/
-│   ├── dto/
-│   ├── model/
-│   ├── repository/
-│   ├── security/
-│   ├── service/
-│   └── main application
-│
-├── mentorai-frontend/
-│   ├── components/
-│   ├── pages/
-│   ├── services/
-│   ├── styles/
-│   └── App.jsx
-
----
-
-🔗 API Endpoints
-
+API Endpoints
 1️⃣ Register User
+POST
 
-POST "/api/auth/register"
+http://localhost:8081/api/auth/register
 
-{
-  "name": "Rahul",
-  "email": "rahul@gmail.com",
-  "password": "1234"
-}
+Request Body
 
----
+{ "name": "Rahul", "email": "rahul@gmail.com ", "password": "1234" }
+
+Response
+
+User registered successfully
 
 2️⃣ Login User
+POST
 
-POST "/api/auth/login"
+http://localhost:8081/api/auth/login
 
-{
-  "email": "rahul@gmail.com",
-  "password": "1234"
-}
+Request Body
 
-➡️ Returns JWT Token
+{ "email": "rahul@gmail.com ", "password": "1234" }
 
----
+Response
 
-3️⃣ Generate Roadmap
+JWT Token
 
-POST "/api/roadmap/generate"
+3️⃣ Generate Learning Roadmap
+POST
 
-Header:
+http://localhost:8081/api/roadmap/generate
 
+Header
+
+Authorization: Bearer YOUR_TOKEN
+
+Request Body
+
+{ "topic": "Spring Boot" }
+
+Response
+
+Generated roadmap saved in database
+
+4️⃣ Update Learning Progress
+POST
+
+http://localhost:8081/api/progress/update
+
+Header
+
+Authorization: Bearer YOUR_TOKEN
+
+Request Body
+
+{ "topic": "Spring Security", "knowledgeBefore": 2, "knowledgeAfter": 8 }
+
+Response
+
+Progress saved successfully
+
+JWT Authentication Flow
+User registers using /api/auth/register
+User logs in using /api/auth/login
+Server verifies credentials
+Server generates JWT token
+Client stores token
+Client sends token in Authorization header
 Authorization: Bearer TOKEN
 
-{
-  "topic": "Spring Boot"
-}
+JWT filter validates token
+User gets access to secured endpoints
+Database Tables
+The system currently uses the following tables:
 
----
+users roadmap topic_progress
 
-4️⃣ Get User Roadmaps
+How to Run Project
+Step 1 — Open terminal in project folder
 
-GET "/api/roadmap/my-roadmaps"
+Step 2 — Run
 
----
-
-5️⃣ Update Progress
-
-POST "/api/progress/update"
-
-{
-  "topic": "Spring Security",
-  "knowledgeBefore": 2,
-  "knowledgeAfter": 8
-}
-
----
-
-🔐 JWT Authentication Flow
-
-1. User registers → "/api/auth/register"
-2. User logs in → "/api/auth/login"
-3. Server generates JWT token
-4. Token stored in frontend (localStorage)
-5. Token sent in every request:
-
-Authorization: Bearer TOKEN
-
-6. JWT filter validates token
-7. User accesses protected APIs
-
----
-
-🗄️ Database Tables
-
-- users
-- roadmap
-- roadmap_topic
-- topic_progress
-
----
-
-▶️ How to Run
-
-🔧 Backend
-
-cd mentorai-backend
 mvn spring-boot:run
 
-Runs on:
+Step 3 — Server starts at
 
 http://localhost:8081
 
----
+Current Project Status
+Completed
 
-🎨 Frontend
+User Registration
+User Login
+JWT Authentication
+Role Based Authorization
+Roadmap Generation
+Roadmap Storage
+Learning Progress Tracking
+Admin APIs
+MySQL Database Integration
+Upcoming Features
 
-cd mentorai-frontend
-npm install
-npm run dev
-
-Runs on:
-
-http://localhost:5173
-
----
-
-🚧 Current Status
-
-✅ Completed
-
-- Authentication (JWT)
-- Role-Based Authorization
-- Roadmap Generation
-- Roadmap Storage (DB)
-- YouTube Video Integration (with fallback)
-- Progress Tracking System
-- Full Frontend UI (Dashboard + Auth + Generate Roadmap)
-- Backend ↔ Frontend Integration
-
----
-
-🚀 Upcoming Features
-
-- AI-based dynamic roadmap generation (Gemini integration)
-- Smart prompt-based roadmap creation
-- AI Chat Assistant
-- Progress analytics dashboard (charts)
-- Deployment (AWS / Render / Vercel)
-
----
-
-💡 Key Learnings
-
-- Implemented JWT-based secure authentication
-- Designed REST APIs with layered architecture (Controller → Service → Repository)
-- Solved circular JSON issues using "@JsonIgnore"
-- Handled CORS & frontend-backend integration
-- Built full-stack application with real-world structure
-
----
-
-👨‍💻 Author
-
+AI Chat Assistant
+React Frontend
+Roadmap Visualization UI
+Progress Analytics Dashboard
+Deployment
+Author
 Pranay Salunkhe
 Java Full Stack Developer
-
----
-
-⭐ Project Vision
-
-To build an intelligent learning assistant that guides users step-by-step in mastering any skill using AI, structured roadmaps, and real-world resources.

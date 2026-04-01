@@ -69,3 +69,244 @@
   font-size: 0.95rem;
   text-shadow: 0 1px 2px rgba(30,41,59,0.12);
 }
+
+/* Topics Container Styles */
+.roadmap-topics-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.topic-item {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.topic-item:hover {
+  box-shadow: 0 2px 8px 0 rgba(56,189,248,0.15);
+}
+
+.topic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.topic-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.topic-video-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #0ea5e9;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.topic-video-link:hover {
+  background: #0284c7;
+}
+
+.topic-video-link:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+/* Accordion Roadmap Card Styles */
+.roadmap-card-accordion {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.roadmap-card-accordion:hover {
+  box-shadow: 0 4px 12px 0 rgba(56, 189, 248, 0.12);
+  border-color: #0ea5e9;
+}
+
+.roadmap-accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.roadmap-accordion-header:hover {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+.roadmap-accordion-header:focus {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+.roadmap-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  gap: 1rem;
+}
+
+.roadmap-header-content h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.roadmap-header-date {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.roadmap-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #0ea5e9;
+  margin-left: 1rem;
+  transition: transform 0.3s ease;
+  font-weight: bold;
+  min-width: 24px;
+}
+
+.roadmap-accordion-header:hover .roadmap-toggle-icon {
+  color: #0284c7;
+}
+
+.roadmap-accordion-content {
+  padding: 1.5rem;
+  background: #fff;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+  to {
+    opacity: 1;
+    max-height: 2000px;
+    overflow: visible;
+  }
+}
+
+/* Topic Progress Visualization */
+.topic-title-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topic-completed-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #dcfce7;
+  color: #166534;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.topic-progress-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.topic-progress-inputs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.progress-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  min-width: 120px;
+}
+
+.progress-input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.topic-progress-input {
+  padding: 0.5rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.topic-progress-input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.progress-update-btn {
+  padding: 0.5rem 1.5rem;
+  background: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  height: fit-content;
+}
+
+.progress-update-btn:hover {
+  background: #0284c7;
+  transform: translateY(-2px);
+}
+
+.progress-update-btn:active {
+  transform: translateY(0);
+}
+
+.topic-progress-bar {
+  margin-top: 1rem;
+}

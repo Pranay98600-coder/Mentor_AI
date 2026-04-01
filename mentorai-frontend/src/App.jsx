@@ -8,6 +8,7 @@ import GenerateRoadmap from "./pages/GenerateRoadmap";
 import MyRoadmaps from "./pages/MyRoadmaps";
 import Progress from "./pages/Progress";
 import Profile from "./pages/Profile";
+import ProgressAnalytics from "./pages/ProgressAnalytics";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -60,6 +61,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Progress />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/analytics"
+          element={
+            <ProtectedRoute>
+              <ProgressAnalytics />
             </ProtectedRoute>
           }
         />

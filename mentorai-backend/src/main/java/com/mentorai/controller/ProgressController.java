@@ -4,6 +4,8 @@ import com.mentorai.dto.ProgressRequest;
 import com.mentorai.model.TopicProgress;
 import com.mentorai.service.ProgressService;
 
+import java.util.List;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +31,12 @@ public class ProgressController {
                 request.getKnowledgeAfter(),
                 email
         );
+    }
+    
+    @GetMapping("/my")
+    public List<TopicProgress> getMyProgress(Authentication authentication) {
+
+        String email = authentication.getName();
+        return progressService.getUserProgress(email);
     }
 }

@@ -5,6 +5,8 @@ import com.mentorai.model.User;
 import com.mentorai.repository.TopicProgressRepository;
 import com.mentorai.repository.UserRepository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,19 +22,30 @@ public class ProgressService {
     }
 
     public TopicProgress saveProgress(String topic,
-                                      int before,
-                                      int after,
-                                      String email) {
+            int before,
+            int after,
+            String email) {
+
+User user = userRepository.findByEmail(email)
+.orElseThrow(() -> new RuntimeException("User not found"));
+
+TopicProgress progress = progressRepository
+.findByUserAndTopic(user, topic)
+.orElse(new TopicProgress());
+
+progress.setTopic(topic);
+progress.setKnowledgeBefore(before);
+progress.setKnowledgeAfter(after);
+progress.setUser(user);
+
+return progressRepository.save(progress);
+}
+    
+    public List<TopicProgress> getUserProgress(String email) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        TopicProgress progress = new TopicProgress();
-        progress.setTopic(topic);
-        progress.setKnowledgeBefore(before);
-        progress.setKnowledgeAfter(after);
-        progress.setUser(user);
-
-        return progressRepository.save(progress);
+        return progressRepository.findByUser(user);
     }
 }

@@ -5,6 +5,7 @@ import {
   FaProjectDiagram,
   FaListAlt,
   FaChartLine,
+  FaChartBar,
   FaSignOutAlt,
 } from "react-icons/fa";
 import "./Sidebar.css";
@@ -30,6 +31,9 @@ const Sidebar = () => {
         </NavLink>
         <NavLink to="/dashboard/progress" className="sidebar-link">
           <FaChartLine /> Progress Tracking
+        </NavLink>
+        <NavLink to="/dashboard/analytics" className="sidebar-link">
+          <FaChartBar /> Analytics
         </NavLink>
         <NavLink to="/dashboard/profile" className="sidebar-link">
           <FaTachometerAlt /> Profile

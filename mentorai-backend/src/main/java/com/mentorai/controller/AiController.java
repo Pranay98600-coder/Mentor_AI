@@ -1,6 +1,9 @@
 package com.mentorai.controller;
 
 import com.mentorai.service.AiService;
+
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,7 +17,7 @@ public class AiController {
     }
 
     @PostMapping("/generate-roadmap")
-    public String generateRoadmap(@RequestParam String topic) throws Exception {
+    public List<String> generateRoadmap(@RequestParam String topic) throws Exception {
 
         return aiService.generateRoadmap(topic);
     }

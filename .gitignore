@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# build files
+dist/
+build/
+
+# environment files
+.env
+
+# backend config
+mentorai-backend/src/main/resources/application.properties
+
+# logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

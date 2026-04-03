@@ -33,7 +33,7 @@ public class YoutubeService {
 
             // 🔥 FALLBACK (IMPORTANT)
             return "https://www.youtube.com/results?search_query="
-                    + topic.replace(" ", "+");
+                    + topic;
         }
     }
 

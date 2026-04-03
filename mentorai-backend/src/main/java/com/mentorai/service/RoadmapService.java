@@ -20,14 +20,40 @@ public class RoadmapService {
     private final RoadmapRepository roadmapRepository;
     private final UserRepository userRepository;
     private final YoutubeService youtubeService;
+    private final AiService aiService;
 
     public RoadmapService(RoadmapRepository roadmapRepository,
                           UserRepository userRepository,
-                          YoutubeService youtubeService) {
+                          YoutubeService youtubeService,AiService aiService) {
 
         this.roadmapRepository = roadmapRepository;
         this.userRepository = userRepository;
         this.youtubeService = youtubeService;
+        this.aiService = aiService;
+    }
+    
+    private String buildPrompt(RoadmapRequest request) {
+
+        return "You are an expert software mentor.\n\n" +
+
+                "Create a personalized learning roadmap.\n\n" +
+
+                "Topic: " + request.getTopic() + "\n" +
+                "Level: " + request.getLevel() + "\n" +
+                "Goal: " + request.getGoal() + "\n" +
+                "Daily Time: " + request.getTime() + "\n" +
+                "Timeline: " + request.getTimeline() + "\n" +
+                "Learning Style: " + request.getLearningStyle() + "\n" +
+                "Working Status: " + request.getWorkingStatus() + "\n\n" +
+
+                "Rules:\n" +
+                "- Give a complete roadmap with 15 to 20 topics "+
+                "-Each topic MUST include the main subject"+
+                "-Exmaple:if topic is c++ then 'C++ Control Flow' , 'C++ OOP' " +
+                "- Each topic should be short and clear\n" +
+                "- Order them from beginner to advanced\n" +
+                "- Do NOT add explanation\n" +
+                "- Only return plain list\n";
     }
 
     public Roadmap generateRoadmap(RoadmapRequest request, String email) {
@@ -38,13 +64,8 @@ public class RoadmapService {
         
         String mainTopic = request.getTopic();
 
-        List<String> topics = List.of(
-                "Java Basics",
-                "OOP Concepts",
-                "Spring Core",
-                "Spring Boot",
-                "Spring Security"
-        );
+        String prompt = buildPrompt(request);
+        List<String> topics = aiService.generateRoadmap(prompt);
 
         Roadmap roadmap = new Roadmap();
         roadmap.setMainTopic(mainTopic);

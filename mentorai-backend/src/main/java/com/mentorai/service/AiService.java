@@ -1,57 +1,87 @@
 package com.mentorai.service;
 
-import okhttp3.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.*;
 
-import java.io.IOException;
+import java.util.*;
 
 @Service
 public class AiService {
 
-    private final String API_KEY = "AIzaSyDTVtaKaRM_7ykGF2T_GA215ZMv28gWeI8";
+    @Value("${openrouter.api.key}")
+    private String apiKey;
 
-    public String generateRoadmap(String topic) {
+    public List<String> generateRoadmap(String prompt) {
+
         try {
-            OkHttpClient client = new OkHttpClient();
+            String url = "https://openrouter.ai/api/v1/chat/completions";
 
-            String prompt = "Create a beginner to advanced learning roadmap for " + topic +
-                    ". Divide it into weekly topics.";
+            RestTemplate restTemplate = new RestTemplate();
 
-            String jsonBody = """
-            {
-              "contents": [{
-                "parts":[{"text": "%s"}]
-              }]
-            }
-            """.formatted(prompt);
+            Map<String, Object> body = new HashMap<>();
+            body.put("model", "openrouter/auto");
 
-            RequestBody body = RequestBody.create(
-                    jsonBody,
-                    MediaType.parse("application/json")
-            );
+            List<Map<String, String>> messages = new ArrayList<>();
 
-            Request request = new Request.Builder()
-                    .url("https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=" + API_KEY)
-                    .post(body)
-                    .build();
+            Map<String, String> userMessage = new HashMap<>();
+            userMessage.put("role", "user");
+            userMessage.put("content", prompt);
 
-            Response response = client.newCall(request).execute();
+            messages.add(userMessage);
 
-            if (response.isSuccessful()) {
-                return response.body().string();
-            }
+            body.put("messages", messages);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + apiKey);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+
+            ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+
+            // Extract AI response
+            Map choice = (Map) ((List) response.getBody().get("choices")).get(0);
+            Map message = (Map) choice.get("message");
+
+            String content = message.get("content").toString();
+
+            return parseTopics(content);
+            
 
         } catch (Exception e) {
-            System.out.println("Gemini API failed, using fallback roadmap.");
+            System.out.println("AI ERROR: " + e.getMessage());
+            return getFallbackTopics();
+        }
+    }
+
+    private List<String> parseTopics(String content) {
+
+        List<String> topics = new ArrayList<>();
+
+        String[] lines = content.split("\n");
+
+        for (String line : lines) {
+
+            line = line.replaceAll("[0-9.\\-•]", "").trim();
+
+            if (!line.isEmpty() && line.length() < 80) {
+                topics.add(line);
+            }
         }
 
-        // Fallback roadmap
-        return """
-        Week 1: Basics of %s
-        Week 2: Core Concepts
-        Week 3: Intermediate Projects
-        Week 4: Advanced Topics
-        Week 5: Build a Complete Project
-        """.formatted(topic);
+        return topics;
+    }
+    
+
+    private List<String> getFallbackTopics() {
+        return List.of(
+                "Java Basics",
+                "OOP Concepts",
+                "Spring Core",
+                "Spring Boot",
+                "Spring Security"
+        );
     }
 }

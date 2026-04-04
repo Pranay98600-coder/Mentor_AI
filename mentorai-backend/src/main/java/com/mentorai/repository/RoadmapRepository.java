@@ -9,4 +9,6 @@ import com.mentorai.model.User;
 
 public interface RoadmapRepository extends JpaRepository<Roadmap, Long> {
 	List<Roadmap> findByUser(User user);
+	void deleteById(Long id);
+	
 }

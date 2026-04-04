@@ -32,6 +32,8 @@ public class RoadmapService {
         this.aiService = aiService;
     }
     
+    
+    
     private String buildPrompt(RoadmapRequest request) {
 
         return "You are an expert software mentor.\n\n" +
@@ -56,6 +58,9 @@ public class RoadmapService {
                 "- Only return plain list\n";
     }
 
+    
+    
+    
     public Roadmap generateRoadmap(RoadmapRequest request, String email) {
 
         // 🔥 get user from DB
@@ -92,6 +97,9 @@ public class RoadmapService {
 
         return roadmapRepository.save(roadmap);
     }
+    
+    
+    
     public List<Roadmap> getUserRoadmaps(String email){
 
         User user = userRepository.findByEmail(email)
@@ -99,4 +107,51 @@ public class RoadmapService {
 
         return roadmapRepository.findByUser(user);
     }
+    
+    
+    
+    public void deleteRoadmap(Long roadmapId, String email) {
+
+        // Get user
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Get roadmap
+        Roadmap roadmap = roadmapRepository.findById(roadmapId)
+                .orElseThrow(() -> new RuntimeException("Roadmap not found"));
+
+        // 🔥 SECURITY CHECK (VERY IMPORTANT)
+        if (!roadmap.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Unauthorized to delete this roadmap");
+        }
+
+        // Delete
+        roadmapRepository.delete(roadmap);
+    }
+    
+    public Roadmap regenerateRoadmap(Long roadmapId,
+            RoadmapRequest request,
+            String email) {
+
+// 🔥 Get user
+    	User user = userRepository.findByEmail(email)
+    			.orElseThrow(() -> new RuntimeException("User not found"));
+
+// 🔥 Get existing roadmap
+    	Roadmap oldRoadmap = roadmapRepository.findById(roadmapId)
+    			.orElseThrow(() -> new RuntimeException("Roadmap not found"));
+
+// 🔥 SECURITY CHECK
+    	if (!oldRoadmap.getUser().getId().equals(user.getId())) {
+    		throw new RuntimeException("Unauthorized");
+    	}
+
+// 🔥 DELETE OLD ROADMAP
+    	roadmapRepository.delete(oldRoadmap);
+
+// 🔥 GENERATE NEW (reuse existing logic)
+    	return generateRoadmap(request, email);
+    }
+    
+    
 }

@@ -2,33 +2,47 @@
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
+  background: var(--color-bg-primary);
 }
 
 .dashboard-main {
   margin-left: 220px;
-  padding: 2.5rem;
+  padding: 40px;
   flex: 1;
-  background: #f8fafc;
   overflow-y: auto;
 }
 
+/* Welcome Banner */
 .dashboard-welcome {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #0284c7;
-  margin-bottom: 2rem;
-  letter-spacing: 0.5px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+  animation: fadeIn var(--transition-base);
+}
+
+.dashboard-welcome + p {
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
 }
 
 .dashboard-section {
-  margin-top: 2.5rem;
+  margin-top: 3rem;
 }
 
 .dashboard-section h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1e293b;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
   margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Loading, Error, and Empty States */
@@ -41,51 +55,55 @@
   justify-content: center;
   min-height: 400px;
   text-align: center;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .dashboard-loading {
   font-size: 1.2rem;
-  color: #0284c7;
+  color: var(--color-accent);
   font-weight: 600;
+  animation: pulse 2s infinite;
 }
 
 .dashboard-error {
-  background: #fee2e2;
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.05));
   border-left: 4px solid #dc2626;
   padding: 2rem;
-  border-radius: 8px;
   color: #991b1b;
   font-size: 1.1rem;
   font-weight: 500;
 }
 
 .dashboard-empty h3 {
-  color: #1e293b;
+  color: var(--color-text-primary);
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .dashboard-empty p {
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-size: 1rem;
   margin-bottom: 1.5rem;
 }
 
 .dashboard-btn {
-  padding: 0.7rem 2rem;
-  background: #0ea5e9;
+  padding: 12px 28px;
+  background: var(--gradient-primary);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md);
 }
 
 .dashboard-btn:hover {
-  background: #0284c7;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Roadmaps List */
@@ -95,16 +113,18 @@
 }
 
 .roadmap-item {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px 0 rgba(56, 189, 248, 0.08);
-  transition: box-shadow 0.2s, transform 0.15s;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  border: 1px solid rgba(79, 172, 254, 0.1);
 }
 
 .roadmap-item:hover {
-  box-shadow: 0 6px 20px 0 rgba(14, 165, 233, 0.15);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
 }
 
 .roadmap-item-header {
@@ -116,21 +136,27 @@
 
 .roadmap-item-header h4 {
   font-size: 1.3rem;
-  font-weight: 600;
-  color: #0284c7;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0;
 }
 
 .roadmap-item-date {
   font-size: 0.9rem;
-  color: #64748b;
+  color: var(--color-text-light);
+  background: var(--color-bg-primary);
+  padding: 4px 12px;
+  border-radius: 999px;
 }
 
 .roadmap-item-topics {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
-  color: #64748b;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
   font-size: 0.95rem;
 }
 
@@ -141,50 +167,72 @@
 /* Dashboard Stats Cards */
 .dashboard-stats-row {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   margin-bottom: 2.5rem;
   flex-wrap: wrap;
 }
+
 .dashboard-stat-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px 0 rgba(56,189,248,0.10);
-  padding: 1.3rem 2.2rem;
-  min-width: 160px;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  flex: 1;
+  min-width: 200px;
   text-align: center;
-  transition: box-shadow 0.25s cubic-bezier(0.4,0,0.2,1), transform 0.18s;
-  cursor: pointer;
+  transition: all var(--transition-base);
+  border: 1px solid var(--color-border);
+  position: relative;
+  overflow: hidden;
 }
+
+.dashboard-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
 .dashboard-stat-card:hover {
-  box-shadow: 0 6px 24px 0 rgba(14,165,233,0.18);
-  transform: translateY(-4px) scale(1.03);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-6px) scale(1.02);
 }
+
 .dashboard-stat-value {
-  font-size: 2.1rem;
-  font-weight: 700;
-  color: #0ea5e9;
-  margin-bottom: 0.3rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
 }
+
 .dashboard-stat-label {
-  font-size: 1.08rem;
-  color: #1e293b;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Progress Overview Section */
 .dashboard-progress-overview {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 28px;
   margin-bottom: 2.5rem;
-  box-shadow: 0 2px 8px 0 rgba(56, 189, 248, 0.08);
-  border-left: 4px solid #0ea5e9;
+  box-shadow: var(--shadow-md);
+  border-left: 5px solid var(--gradient-primary);
 }
 
 .dashboard-progress-overview h3 {
   font-size: 1.3rem;
-  font-weight: 600;
-  color: #1e293b;
+  font-weight: 700;
+  color: var(--color-text-primary);
   margin: 0 0 1.5rem 0;
 }
 
@@ -198,16 +246,17 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
-  background: #f8fafc;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  transition: all 0.2s;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.05), rgba(0, 242, 254, 0.05));
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(79, 172, 254, 0.2);
+  transition: all var(--transition-base);
 }
 
 .progress-stat-item:hover {
-  background: #f1f5f9;
-  border-color: #0ea5e9;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
 }
 
 .progress-stat-item.full-width {
@@ -215,29 +264,56 @@
 }
 
 .stat-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .stat-value {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #0ea5e9;
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .stat-value.completed {
-  color: #22c55e;
+  background: var(--gradient-success);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Chart Container */
 .chart-container {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid #e2e8f0;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border: 1px solid var(--color-border);
   margin-top: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .dashboard-welcome {
+    font-size: 2rem;
+  }
+
+  .dashboard-stats-row {
+    flex-direction: column;
+  }
+
+  .dashboard-stat-card {
+    min-width: auto;
+  }
 }

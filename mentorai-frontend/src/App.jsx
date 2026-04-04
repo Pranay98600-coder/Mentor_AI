@@ -9,6 +9,7 @@ import MyRoadmaps from "./pages/MyRoadmaps";
 import Progress from "./pages/Progress";
 import Profile from "./pages/Profile";
 import ProgressAnalytics from "./pages/ProgressAnalytics";
+import Chat from "./pages/Chat";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -77,6 +78,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <Chat />
             </ProtectedRoute>
           }
         />

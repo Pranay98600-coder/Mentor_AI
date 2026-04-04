@@ -21,4 +21,6 @@ public class AiController {
 
         return aiService.generateRoadmap(topic);
     }
+    
+    
 }

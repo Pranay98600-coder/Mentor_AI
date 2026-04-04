@@ -163,7 +163,7 @@ const Dashboard = () => {
       <div className="dashboard-layout">
         <Sidebar />
         <main className="dashboard-main">
-          <h2 className="dashboard-welcome">Welcome back, {username}</h2>
+          <h2 className="dashboard-welcome">Welcome, {username ? username : "User"} 👋</h2>
           <div className="dashboard-empty">
             <h3>No roadmap found</h3>
             <p>Start your learning journey by generating a roadmap</p>
@@ -181,7 +181,7 @@ const Dashboard = () => {
     <div className="dashboard-layout">
       <Sidebar />
       <main className="dashboard-main">
-        <h2 className="dashboard-welcome">Welcome back, {username}</h2>
+        <h2 className="dashboard-welcome">Welcome, {username ? username : "User"} 👋</h2>
         <DashboardStatsCards stats={stats} />
 
         {/* Progress Overview */}

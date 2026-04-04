@@ -1,0 +1,155 @@
+/* Global Design System for MentorAI */
+/* Color Palette & Gradients */
+
+:root {
+  /* Primary Gradient */
+  --gradient-primary: linear-gradient(135deg, #4facfe, #00f2fe);
+  --gradient-secondary: linear-gradient(135deg, #667eea, #764ba2);
+  --gradient-success: linear-gradient(135deg, #22c55e, #16a34a);
+  --gradient-warning: linear-gradient(135deg, #f59e0b, #dc2626);
+
+  /* Colors */
+  --color-bg-primary: #f5f7fb;
+  --color-bg-secondary: #ffffff;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-text-light: #9ca3af;
+  --color-border: #e5e7eb;
+  --color-accent: #4facfe;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
+  --shadow-hover: 0 20px 35px rgba(79, 172, 254, 0.15);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base Button Styles */
+button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition-base);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Base Input Styles */
+input,
+textarea {
+  font-family: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 14px;
+  transition: all var(--transition-base);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-light);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+/* Card Base */
+.card {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--gradient-primary);
+  color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-base);
+}
+
+.animate-slide-in {
+  animation: slideInRight var(--transition-base);
+}

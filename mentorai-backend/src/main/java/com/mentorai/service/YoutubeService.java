@@ -13,7 +13,6 @@ public class YoutubeService {
     public String getVideoUrl(String topic) {
 
         try {
-
             String url = "https://www.googleapis.com/youtube/v3/search"
                     + "?part=snippet"
                     + "&type=video"
@@ -31,29 +30,31 @@ public class YoutubeService {
 
             System.out.println("YouTube API ERROR: " + e.getMessage());
 
-            // 🔥 FALLBACK (IMPORTANT)
-            return "https://www.youtube.com/results?search_query="
-                    + topic;
+            // 🔥 fallback video
+            return "https://www.youtube.com/results?search_query=" + topic + "+full course tutorial";
         }
     }
 
     private String extractVideoUrl(String json) {
 
         try {
-            int index = json.indexOf("videoId");
+            // find videoId safely
+            String videoIdKey = "\"videoId\": \"";
+            int start = json.indexOf(videoIdKey);
 
-            if (index == -1) {
-                return "https://www.youtube.com";
+            if (start == -1) {
+                return null;
             }
 
-            String sub = json.substring(index + 10);
-            String videoId = sub.substring(0, sub.indexOf("\""));
+            start += videoIdKey.length();
+            int end = json.indexOf("\"", start);
+
+            String videoId = json.substring(start, end);
 
             return "https://www.youtube.com/watch?v=" + videoId;
 
         } catch (Exception e) {
-
-            return "https://www.youtube.com";
+            return null;
         }
     }
 }

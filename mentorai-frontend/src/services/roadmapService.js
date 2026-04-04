@@ -18,3 +18,13 @@ export const updateProgress = async (topic, knowledgeBefore, knowledgeAfter) => 
   });
   return res.data;
 };
+
+export const deleteRoadmap = async (id) => {
+  const res = await api.delete(`/roadmap/delete/${id}`);
+  return res.data;
+};
+
+export const regenerateRoadmap = async (id, data) => {
+  const res = await api.put(`/roadmap/regenerate/${id}`, data);
+  return res.data;
+};

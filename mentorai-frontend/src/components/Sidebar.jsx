@@ -3,9 +3,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {
   FaTachometerAlt,
   FaProjectDiagram,
-  FaListAlt,
-  FaChartLine,
   FaChartBar,
+  FaUser,
+  FaComments,
   FaSignOutAlt,
 } from "react-icons/fa";
 import "./Sidebar.css";
@@ -26,17 +26,14 @@ const Sidebar = () => {
         <NavLink to="/dashboard/generate" className="sidebar-link">
           <FaProjectDiagram /> Generate Roadmap
         </NavLink>
-        <NavLink to="/dashboard/my-roadmaps" className="sidebar-link">
-          <FaListAlt /> My Roadmaps
-        </NavLink>
-        <NavLink to="/dashboard/progress" className="sidebar-link">
-          <FaChartLine /> Progress Tracking
-        </NavLink>
         <NavLink to="/dashboard/analytics" className="sidebar-link">
           <FaChartBar /> Analytics
         </NavLink>
         <NavLink to="/dashboard/profile" className="sidebar-link">
-          <FaTachometerAlt /> Profile
+          <FaUser /> Profile
+        </NavLink>
+        <NavLink to="/chat" className="sidebar-link">
+          <FaComments /> AI Mentor
         </NavLink>
         <button className="sidebar-link logout" onClick={handleLogout}>
           <FaSignOutAlt /> Logout

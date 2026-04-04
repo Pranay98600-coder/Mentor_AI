@@ -56,6 +56,8 @@ public class AiService {
         }
     }
 
+    
+    
     private List<String> parseTopics(String content) {
 
         List<String> topics = new ArrayList<>();
@@ -84,4 +86,7 @@ public class AiService {
                 "Spring Security"
         );
     }
+    
+    
+    
 }

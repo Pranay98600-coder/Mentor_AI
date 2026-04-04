@@ -1,5 +1,7 @@
 package com.mentorai.controller;
 
+import com.mentorai.dto.LoginRequest;
+import com.mentorai.dto.LoginResponse;
 import com.mentorai.model.User;
 import com.mentorai.service.AuthService;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return authService.login(user.getEmail(), user.getPassword());
+    public LoginResponse login(@RequestBody LoginRequest request) {
+        return authService.login(request.getEmail(), request.getPassword());
     }
 }

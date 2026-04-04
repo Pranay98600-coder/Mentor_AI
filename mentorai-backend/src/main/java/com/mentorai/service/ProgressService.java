@@ -1,7 +1,9 @@
 package com.mentorai.service;
 
+import com.mentorai.model.Roadmap;
 import com.mentorai.model.TopicProgress;
 import com.mentorai.model.User;
+import com.mentorai.repository.RoadmapRepository;
 import com.mentorai.repository.TopicProgressRepository;
 import com.mentorai.repository.UserRepository;
 
@@ -14,11 +16,13 @@ public class ProgressService {
 
     private final TopicProgressRepository progressRepository;
     private final UserRepository userRepository;
+   
 
     public ProgressService(TopicProgressRepository progressRepository,
-                           UserRepository userRepository) {
+                           UserRepository userRepository ) {
         this.progressRepository = progressRepository;
         this.userRepository = userRepository;
+        
     }
 
     public TopicProgress saveProgress(String topic,
@@ -48,4 +52,6 @@ return progressRepository.save(progress);
 
         return progressRepository.findByUser(user);
     }
+    
+    
 }

@@ -38,4 +38,29 @@ public class RoadmapController {
 
         return roadmapService.getUserRoadmaps(email);
     }
+    
+    @DeleteMapping("/delete/{id}")
+    public String deleteRoadmap(@PathVariable Long id,
+                               Authentication authentication) {
+
+        String email = authentication.getName();
+
+        roadmapService.deleteRoadmap(id, email);
+
+        return "Roadmap deleted successfully";
+    }
+    
+    @PutMapping("/regenerate/{id}")
+    public Roadmap regenerateRoadmap(@PathVariable Long id,
+                                     @RequestBody RoadmapRequest request,
+                                     Authentication authentication) {
+
+        String email = authentication.getName();
+
+        // delete old
+        roadmapService.deleteRoadmap(id, email);
+
+        // generate new
+        return roadmapService.generateRoadmap(request, email);
+    }
 }

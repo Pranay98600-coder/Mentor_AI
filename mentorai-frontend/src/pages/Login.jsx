@@ -14,8 +14,16 @@ const Login = () => {
     setError("");
     try {
       const data = await login(email, password);
-      localStorage.setItem("token", data);
-      //localStorage.setItem("username", data.username);
+      
+      // Store correct values from response
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
+      localStorage.setItem("email", data.email);
+      
+      // Debug
+      console.log("Stored username:", data.username);
+      console.log("Stored email:", data.email);
+      
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");

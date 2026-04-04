@@ -1,6 +1,7 @@
 package com.mentorai.service;
 
 import com.mentorai.model.User;
+import com.mentorai.dto.LoginResponse;
 import com.mentorai.model.Role;
 import com.mentorai.repository.UserRepository;
 import com.mentorai.security.JwtUtil;
@@ -41,24 +42,24 @@ public class AuthService {
     }
 
     // LOGIN
-    public String login(String email, String password) {
+    public LoginResponse login(String email, String password) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // check password
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 
-        // generate token
-        String token =
-                jwtUtil.generateToken(
-                        user.getEmail(),
-                        user.getRole().name()
-                );
+        String token = jwtUtil.generateToken(
+                user.getEmail(),
+                user.getRole().name()
+        );
 
-        return token;
+        return new LoginResponse(
+                token,
+                user.getName(),   // 🔥 IMPORTANT
+                user.getEmail()
+        );
     }
 }

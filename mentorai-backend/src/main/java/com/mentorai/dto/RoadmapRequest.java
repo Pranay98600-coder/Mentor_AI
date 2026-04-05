@@ -9,10 +9,17 @@ public class RoadmapRequest {
     private String learningStyle;
     private String workingStatus;
     private String timeline;
+    private String customNote;
 
     // Getters & Setters
 
-    public String getTopic() { return topic; }
+    public String getCustomNote() {
+		return customNote;
+	}
+	public void setCustomNote(String customeNote) {
+		this.customNote = customeNote;
+	}
+	public String getTopic() { return topic; }
     public void setTopic(String topic) { this.topic = topic; }
 
     public String getLevel() { return level; }

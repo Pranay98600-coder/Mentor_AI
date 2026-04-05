@@ -47,6 +47,8 @@ public class RoadmapService {
                 "Timeline: " + request.getTimeline() + "\n" +
                 "Learning Style: " + request.getLearningStyle() + "\n" +
                 "Working Status: " + request.getWorkingStatus() + "\n\n" +
+                "Special Instructions: " + 
+                (request.getCustomNote() != null ? request.getCustomNote() : "None") + "\n\n" +
 
                 "Rules:\n" +
                 "- Give a complete roadmap with 15 to 20 topics "+

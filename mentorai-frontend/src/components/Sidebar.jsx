@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { logout } from "../utils/auth";
 import {
   FaTachometerAlt,
   FaProjectDiagram,
@@ -13,33 +15,78 @@ import "./Sidebar.css";
 const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    navigate("/login");
+    logout();
+    // Force full app reload to ensure ProtectedRoute re-evaluates
+    window.location.href = "/login";
   };
+
+  const linkVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (i) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.05,
+        duration: 0.3,
+      },
+    }),
+  };
+
+  const links = [
+    { to: "/dashboard", label: "Dashboard", icon: FaTachometerAlt },
+    { to: "/dashboard/generate", label: "Generate Roadmap", icon: FaProjectDiagram },
+    { to: "/dashboard/analytics", label: "Analytics", icon: FaChartBar },
+    { to: "/dashboard/profile", label: "Profile", icon: FaUser },
+    { to: "/chat", label: "AI Mentor", icon: FaComments },
+  ];
+
   return (
-    <aside className="sidebar">
+    <motion.aside
+      className="sidebar"
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <nav className="sidebar-nav">
-        <NavLink to="/dashboard" className="sidebar-link">
-          <FaTachometerAlt /> Dashboard
-        </NavLink>
-        <NavLink to="/dashboard/generate" className="sidebar-link">
-          <FaProjectDiagram /> Generate Roadmap
-        </NavLink>
-        <NavLink to="/dashboard/analytics" className="sidebar-link">
-          <FaChartBar /> Analytics
-        </NavLink>
-        <NavLink to="/dashboard/profile" className="sidebar-link">
-          <FaUser /> Profile
-        </NavLink>
-        <NavLink to="/chat" className="sidebar-link">
-          <FaComments /> AI Mentor
-        </NavLink>
-        <button className="sidebar-link logout" onClick={handleLogout}>
+        {links.map((link, i) => (
+          <motion.div
+            key={link.to}
+            custom={i}
+            variants={linkVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <NavLink
+              to={link.to}
+              className="sidebar-link"
+              end={link.to === "/dashboard"}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05, x: 5 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+              >
+                <link.icon /> {link.label}
+              </motion.div>
+            </NavLink>
+          </motion.div>
+        ))}
+        <motion.button
+          className="sidebar-link logout"
+          onClick={handleLogout}
+          custom={links.length}
+          variants={linkVariants}
+          initial="hidden"
+          animate="visible"
+          whileHover={{ scale: 1.05, x: 5 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
           <FaSignOutAlt /> Logout
-        </button>
+        </motion.button>
       </nav>
-    </aside>
+    </motion.aside>
   );
 };
 

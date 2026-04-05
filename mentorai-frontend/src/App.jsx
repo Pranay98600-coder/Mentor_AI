@@ -19,20 +19,17 @@ import "./styles/sidebar.css";
 import "./styles/roadmap.css";
 import "./styles/auth.css";
 
-
-// Helper to check if user is authenticated
-const isAuthenticated = () => {
-  return !!localStorage.getItem("token");
-};
-
 function App() {
+  // Check if user is authenticated
+  const isAuthenticated = !!localStorage.getItem("token");
+
   return (
     <Router>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <Login />} />
-        <Route path="/register" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <Register />} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
         <Route
           path="/dashboard"
           element={

@@ -55,23 +55,25 @@
   justify-content: center;
   min-height: 400px;
   text-align: center;
-  background: var(--color-bg-secondary);
+  background: #1e293b;
+  backdrop-filter: none;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #334155;
 }
 
 .dashboard-loading {
   font-size: 1.2rem;
-  color: var(--color-accent);
+  color: #8b5cf6;
   font-weight: 600;
   animation: pulse 2s infinite;
 }
 
 .dashboard-error {
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.05));
+  background: rgba(220, 38, 38, 0.1);
   border-left: 4px solid #dc2626;
   padding: 2rem;
-  color: #991b1b;
+  color: #fca5a5;
   font-size: 1.1rem;
   font-weight: 500;
 }
@@ -113,18 +115,20 @@
 }
 
 .roadmap-item {
-  background: var(--color-bg-secondary);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
   border-radius: var(--radius-lg);
   padding: 20px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 32px rgba(31, 41, 55, 0.08);
   transition: all var(--transition-base);
-  border: 1px solid rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .roadmap-item:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-4px);
-  border-color: var(--color-accent);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+  transform: translateY(-6px);
+  border-color: #8b5cf6;
+  background: #1e293b;
 }
 
 .roadmap-item-header {
@@ -173,15 +177,16 @@
 }
 
 .dashboard-stat-card {
-  background: var(--color-bg-secondary);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 32px rgba(31, 41, 55, 0.08);
   padding: 24px;
   flex: 1;
   min-width: 200px;
   text-align: center;
   transition: all var(--transition-base);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -197,8 +202,10 @@
 }
 
 .dashboard-stat-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 30px rgba(79, 172, 254, 0.3);
+  transform: translateY(-8px) scale(1.03);
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(79, 172, 254, 0.3);
 }
 
 .dashboard-stat-value {
@@ -247,15 +254,15 @@
   flex-direction: column;
   gap: 0.5rem;
   padding: 16px;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.05), rgba(0, 242, 254, 0.05));
+  background: rgba(139, 92, 246, 0.1);
   border-radius: var(--radius-md);
-  border: 1px solid rgba(79, 172, 254, 0.2);
+  border: 1px solid #334155;
   transition: all var(--transition-base);
 }
 
 .progress-stat-item:hover {
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
-  border-color: var(--color-accent);
+  background: rgba(139, 92, 246, 0.15);
+  border-color: #8b5cf6;
   transform: translateY(-2px);
 }
 

@@ -1,17 +1,17 @@
 /* Modern Profile Page Styles */
 
 .profile-section {
-  background: var(--color-bg-secondary);
+  background: #1e293b;
   border-radius: var(--radius-lg);
   padding: 28px;
   margin-bottom: 24px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(79, 172, 254, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #334155;
   transition: all var(--transition-base);
 }
 
 .profile-section:hover {
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .profile-section h3 {
@@ -34,7 +34,7 @@
   align-items: center;
   gap: 20px;
   padding-bottom: 24px;
-  border-bottom: 2px solid rgba(79, 172, 254, 0.1);
+  border-bottom: 2px solid #334155;
   margin-bottom: 24px;
 }
 
@@ -50,14 +50,14 @@
   justify-content: center;
   font-size: 32px;
   font-weight: 700;
-  box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
   flex-shrink: 0;
   transition: all var(--transition-base);
 }
 
 .avatar:hover {
   transform: scale(1.1);
-  box-shadow: 0 12px 30px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
 }
 
 .profile-details {
@@ -91,14 +91,14 @@
   flex-direction: column;
   gap: 8px;
   padding: 16px;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.05), rgba(0, 242, 254, 0.05));
+  background: rgba(139, 92, 246, 0.1);
   border-radius: var(--radius-md);
-  border-left: 4px solid var(--gradient-primary);
+  border-left: 4px solid #8b5cf6;
   transition: all var(--transition-base);
 }
 
 .info-item:hover {
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+  background: rgba(139, 92, 246, 0.15);
   transform: translateY(-2px);
 }
 
@@ -129,25 +129,25 @@
 
 /* Roadmap Card */
 .roadmap-card {
-  background: var(--color-bg-secondary);
-  border: 1px solid rgba(79, 172, 254, 0.1);
+  background: #1e293b;
+  border: 1px solid #334155;
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--transition-base);
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .roadmap-card:hover {
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-hover);
+  border-color: #8b5cf6;
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
   transform: translateY(-6px);
 }
 
 .roadmap-card-header {
   padding: 16px;
-  border-bottom: 1px solid rgba(79, 172, 254, 0.1);
+  border-bottom: 1px solid #334155;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -185,9 +185,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.05));
+  background: rgba(139, 92, 246, 0.1);
   border-radius: var(--radius-md);
-  border-left: 3px solid var(--color-accent);
+  border-left: 3px solid #8b5cf6;
 }
 
 .stat-label {
@@ -207,7 +207,7 @@
 
 .roadmap-card-footer {
   padding: 12px 16px;
-  border-top: 1px solid rgba(79, 172, 254, 0.1);
+  border-top: 1px solid #334155;
   display: flex;
   gap: 8px;
 }
@@ -224,12 +224,12 @@
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-base);
-  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
 }
 
 .regenerate-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
 }
 
 .regenerate-btn:active:not(:disabled) {
@@ -276,9 +276,9 @@
 .profile-empty {
   text-align: center;
   padding: 60px 20px;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.05), rgba(0, 242, 254, 0.05));
+  background: rgba(139, 92, 246, 0.1);
   border-radius: var(--radius-lg);
-  border: 2px dashed rgba(79, 172, 254, 0.2);
+  border: 2px dashed #334155;
 }
 
 .profile-empty h4 {
@@ -348,15 +348,15 @@
   flex-direction: column;
   gap: 8px;
   padding: 16px;
-  background: #f1f5f9;
+  background: rgba(139, 92, 246, 0.1);
   border-radius: 8px;
-  border-left: 4px solid #0ea5e9;
+  border-left: 4px solid #8b5cf6;
 }
 
 .info-label {
   font-size: 13px;
   font-weight: 500;
-  color: #64748b;
+  color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -364,7 +364,7 @@
 .info-value {
   font-size: 20px;
   font-weight: 600;
-  color: #1e293b;
+  color: #e2e8f0;
 }
 
 /* Roadmaps Grid */
@@ -377,25 +377,25 @@
 
 /* Roadmap Card */
 .roadmap-card {
-  background: white;
-  border: 1px solid #e2e8f0;
+  background: #1e293b;
+  border: 1px solid #334155;
   border-radius: 10px;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .roadmap-card:hover {
-  border-color: #0ea5e9;
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+  border-color: #8b5cf6;
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
   transform: translateY(-2px);
 }
 
 .roadmap-card-header {
   padding: 16px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #334155;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -405,7 +405,7 @@
 .roadmap-title {
   font-size: 16px;
   font-weight: 600;
-  color: #1e293b;
+  color: #e2e8f0;
   margin: 0;
   flex: 1;
   word-break: break-word;
@@ -427,26 +427,26 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background: #f0f9ff;
+  background: rgba(139, 92, 246, 0.1);
   border-radius: 8px;
-  border-left: 3px solid #0ea5e9;
+  border-left: 3px solid #8b5cf6;
 }
 
 .stat-label {
   font-size: 13px;
   font-weight: 500;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .stat-value {
   font-size: 20px;
   font-weight: 700;
-  color: #0ea5e9;
+  color: #8b5cf6;
 }
 
 .roadmap-card-footer {
   padding: 12px 16px;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid #334155;
   display: flex;
   gap: 8px;
 }
@@ -455,7 +455,7 @@
 .regenerate-btn {
   flex: 1;
   padding: 10px 16px;
-  background: #0ea5e9;
+  background: #8b5cf6;
   color: white;
   border: none;
   border-radius: 6px;
@@ -466,8 +466,8 @@
 }
 
 .regenerate-btn:hover:not(:disabled) {
-  background: #0284c7;
-  box-shadow: 0 4px 8px rgba(14, 165, 233, 0.2);
+  background: #7c3aed;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
   transform: translateY(-1px);
 }
 

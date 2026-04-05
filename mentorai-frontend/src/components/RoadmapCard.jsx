@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import ProgressBar from "./ProgressBar";
 import "../styles/roadmap.css";
 
@@ -9,30 +10,42 @@ const statusColors = {
 };
 
 const RoadmapCard = ({ topic, video, status = "notstarted", percent = 0 }) => (
-  <div className="roadmap-card">
+  <motion.div
+    className="roadmap-card"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    whileHover={{ scale: 1.03, y: -8 }}
+    whileTap={{ scale: 0.98 }}
+  >
     <div className="roadmap-card-header">
       <h3 className="roadmap-card-title">{topic}</h3>
-      <span
+      <motion.span
         className={`roadmap-card-badge ${status}`}
         style={{ background: statusColors[status] || statusColors.notstarted }}
+        whileHover={{ scale: 1.1 }}
+        transition={{ type: "spring", stiffness: 300 }}
       >
         {status === "completed"
           ? "Completed"
           : status === "inprogress"
           ? "In Progress"
           : "Not Started"}
-      </span>
+      </motion.span>
     </div>
     <ProgressBar percent={percent} color={statusColors[status] || statusColors.notstarted} />
-    <a
+    <motion.a
       href={video}
       className="roadmap-card-link"
       target="_blank"
       rel="noopener noreferrer"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 200 }}
     >
       Watch Video
-    </a>
-  </div>
+    </motion.a>
+  </motion.div>
 );
 
 export default RoadmapCard;

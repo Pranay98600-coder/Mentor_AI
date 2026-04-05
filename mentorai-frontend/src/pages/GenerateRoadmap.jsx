@@ -15,6 +15,7 @@ const GenerateRoadmap = () => {
     learningStyle: "Both",
     workingStatus: "No",
     timeline: "3",
+    customNote: "",
   });
 
   const handleChange = (e) => {
@@ -178,6 +179,20 @@ const GenerateRoadmap = () => {
                 <option value="12">1 year</option>
               </select>
             </div>
+          </div>
+
+          {/* Custom Instructions */}
+          <div className="form-group">
+            <label htmlFor="customNote">Any specific requirements? (Optional)</label>
+            <textarea
+              id="customNote"
+              name="customNote"
+              value={formData.customNote}
+              onChange={handleChange}
+              placeholder="Example: Focus on projects, prepare for job, skip theory, etc."
+              rows={3}
+              disabled={loading}
+            />
           </div>
 
           {/* Buttons */}

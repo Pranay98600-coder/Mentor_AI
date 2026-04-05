@@ -3,26 +3,28 @@
 
 :root {
   /* Primary Gradient */
-  --gradient-primary: linear-gradient(135deg, #4facfe, #00f2fe);
-  --gradient-secondary: linear-gradient(135deg, #667eea, #764ba2);
+  --gradient-primary: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  --gradient-secondary: linear-gradient(135deg, #8b5cf6, #7c3aed);
   --gradient-success: linear-gradient(135deg, #22c55e, #16a34a);
   --gradient-warning: linear-gradient(135deg, #f59e0b, #dc2626);
 
   /* Colors */
-  --color-bg-primary: #f5f7fb;
-  --color-bg-secondary: #ffffff;
-  --color-text-primary: #1f2937;
-  --color-text-secondary: #6b7280;
-  --color-text-light: #9ca3af;
-  --color-border: #e5e7eb;
-  --color-accent: #4facfe;
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-text-primary: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-light: #64748b;
+  --color-border: #334155;
+  --color-accent: #8b5cf6;
 
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
-  --shadow-hover: 0 20px 35px rgba(79, 172, 254, 0.15);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 20px 35px rgba(139, 92, 246, 0.15);
+  --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.1);
+  --shadow-glow-hover: 0 0 30px rgba(139, 92, 246, 0.2);
 
   /* Border Radius */
   --radius-sm: 8px;
@@ -45,7 +47,10 @@ body {
     Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   background-color: var(--color-bg-primary);
+  background-image: linear-gradient(135deg, rgba(139, 92, 246, 0.03), rgba(15, 23, 42, 0.05));
+  background-attachment: fixed;
   color: var(--color-text-primary);
+  position: relative;
 }
 
 /* Smooth Scrolling */
@@ -85,21 +90,25 @@ input:focus,
 textarea:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
 }
 
 /* Card Base */
 .card {
   background: var(--color-bg-secondary);
+  backdrop-filter: none;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: 24px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 32px rgba(31, 41, 55, 0.08);
   transition: all var(--transition-base);
 }
 
 .card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+  background: #1e293b;
+  box-shadow: var(--shadow-glow-hover);
+  transform: translateY(-6px);
+  border-color: #8b5cf6;
 }
 
 /* Badge */
@@ -111,6 +120,29 @@ textarea:focus {
   font-weight: 600;
   background: var(--gradient-primary);
   color: white;
+  box-shadow: var(--shadow-glow);
+}
+
+/* Glassmorphism Utility */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: rgba(20, 25, 40, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Glow Effect */
+.glow {
+  box-shadow: var(--shadow-glow);
+}
+
+.glow-hover:hover {
+  box-shadow: var(--shadow-glow-hover);
 }
 
 /* Animations */
@@ -136,6 +168,37 @@ textarea:focus {
   }
 }
 
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 @keyframes pulse {
   0%,
   100% {
@@ -152,4 +215,20 @@ textarea:focus {
 
 .animate-slide-in {
   animation: slideInRight var(--transition-base);
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft var(--transition-base);
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--transition-base);
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse var(--transition-slow) infinite;
 }

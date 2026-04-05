@@ -1,42 +1,73 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { isAuthenticated, logout } from "../utils/auth";
 import "./Navbar.css";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem("token");
+  const loggedIn = isAuthenticated();
   const username = localStorage.getItem("username");
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    navigate("/login");
+    logout();
+    // Force full app reload to ensure ProtectedRoute re-evaluates
+    window.location.href = "/login";
   };
 
   // Hide navbar on dashboard (it will be inside dashboard layout)
   if (location.pathname.startsWith("/dashboard")) return null;
 
   return (
-    <nav className="navbar">
-      <div className="navbar-left">
+    <motion.nav
+      className="navbar"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="navbar-left"
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
         <img src="/logo192.png" alt="MentorAI Logo" className="navbar-logo" />
         <span className="navbar-title">MentorAI</span>
-      </div>
+      </motion.div>
       <div className="navbar-right">
-        {isLoggedIn ? (
+        {loggedIn ? (
           <>
             <span className="navbar-username">{username}</span>
-            <button className="navbar-btn" onClick={handleLogout}>Logout</button>
+            <motion.button
+              className="navbar-btn"
+              onClick={handleLogout}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(79, 172, 254, 0.3)" }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              Logout
+            </motion.button>
           </>
         ) : (
           <>
-            <Link to="/login" className="navbar-btn">Login</Link>
-            <Link to="/register" className="navbar-btn">Register</Link>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Link to="/login" className="navbar-btn">Login</Link>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Link to="/register" className="navbar-btn">Register</Link>
+            </motion.div>
           </>
         )}
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

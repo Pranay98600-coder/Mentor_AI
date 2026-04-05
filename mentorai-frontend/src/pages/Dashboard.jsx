@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Sidebar from "../components/Sidebar";
 import DashboardStatsCards from "../components/DashboardStatsCards";
 import RoadmapCard from "../components/RoadmapCard";
@@ -139,7 +140,14 @@ const Dashboard = () => {
       <div className="dashboard-layout">
         <Sidebar />
         <main className="dashboard-main">
-          <div className="dashboard-loading">Loading...</div>
+          <motion.div
+            className="dashboard-loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            Loading...
+          </motion.div>
         </main>
       </div>
     );
@@ -151,7 +159,14 @@ const Dashboard = () => {
       <div className="dashboard-layout">
         <Sidebar />
         <main className="dashboard-main">
-          <div className="dashboard-error">{error}</div>
+          <motion.div
+            className="dashboard-error"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {error}
+          </motion.div>
         </main>
       </div>
     );
@@ -163,14 +178,32 @@ const Dashboard = () => {
       <div className="dashboard-layout">
         <Sidebar />
         <main className="dashboard-main">
-          <h2 className="dashboard-welcome">Welcome, {username ? username : "User"} 👋</h2>
-          <div className="dashboard-empty">
+          <motion.h2
+            className="dashboard-welcome"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Welcome, {username ? username : "User"} 👋
+          </motion.h2>
+          <motion.div
+            className="dashboard-empty"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <h3>No roadmap found</h3>
             <p>Start your learning journey by generating a roadmap</p>
-            <button className="dashboard-btn" onClick={() => navigate("/dashboard/generate")}>
+            <motion.button
+              className="dashboard-btn"
+              onClick={() => navigate("/dashboard/generate")}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               Generate Roadmap
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </main>
       </div>
     );
@@ -180,8 +213,20 @@ const Dashboard = () => {
   return (
     <div className="dashboard-layout">
       <Sidebar />
-      <main className="dashboard-main">
-        <h2 className="dashboard-welcome">Welcome, {username ? username : "User"} 👋</h2>
+      <motion.main
+        className="dashboard-main"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.h2
+          className="dashboard-welcome"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Welcome, {username ? username : "User"} 👋
+        </motion.h2>
         <DashboardStatsCards stats={stats} />
 
         {/* Progress Overview */}
@@ -320,7 +365,7 @@ const Dashboard = () => {
             ))}
           </div>
         </section>
-      </main>
+      </motion.main>
     </div>
   );
 };

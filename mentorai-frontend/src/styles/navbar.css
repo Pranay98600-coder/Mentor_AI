@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   padding: 5rem 1rem 3rem 1rem;
-  background: linear-gradient(135deg, var(--gradient-primary), var(--gradient-secondary));
+  background: var(--gradient-primary);
   min-height: 70vh;
   position: relative;
   overflow: hidden;
@@ -18,7 +18,8 @@
   right: -10%;
   width: 600px;
   height: 600px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--accent-primary);
+  opacity: 0.05;
   border-radius: 50%;
   z-index: 0;
 }
@@ -74,7 +75,7 @@
 
 .hero-btn.primary {
   background: white;
-  color: var(--color-accent);
+  color: var(--accent-primary);
 }
 
 .hero-btn.primary:hover {

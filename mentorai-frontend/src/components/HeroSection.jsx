@@ -24,6 +24,13 @@ const HeroSection = () => {
     },
   };
 
+  const handleExploreFeatures = () => {
+    const featuresElement = document.getElementById("features");
+    if (featuresElement) {
+      featuresElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <motion.section
       className="hero-section"
@@ -53,7 +60,7 @@ const HeroSection = () => {
           whileTap={{ scale: 0.95 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <Link to="#features" className="hero-btn secondary">Explore Features</Link>
+          <button onClick={handleExploreFeatures} className="hero-btn secondary">Explore Features</button>
         </motion.div>
       </motion.div>
     </motion.section>

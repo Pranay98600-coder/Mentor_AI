@@ -4,13 +4,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 32px;
-  background: #1e293b;
+  background: var(--bg-secondary);
   backdrop-filter: none;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-md);
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .navbar-left {
@@ -52,17 +52,17 @@
   cursor: pointer;
   transition: all var(--transition-base);
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+  box-shadow: var(--shadow-accent);
 }
 
 .navbar-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+  box-shadow: var(--shadow-accent-hover);
 }
 
 .navbar-username {
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: var(--text-primary);
   margin-right: 0.5rem;
   font-size: 0.95rem;
 }

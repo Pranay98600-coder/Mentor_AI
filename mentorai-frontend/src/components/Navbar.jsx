@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { isAuthenticated, logout } from "../utils/auth";
+import ThemeToggle from "./ThemeToggle";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -35,6 +36,7 @@ const Navbar = () => {
         <span className="navbar-title">MentorAI</span>
       </motion.div>
       <div className="navbar-right">
+        <ThemeToggle />
         {loggedIn ? (
           <>
             <span className="navbar-username">{username}</span>

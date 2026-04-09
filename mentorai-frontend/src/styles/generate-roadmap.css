@@ -1,7 +1,7 @@
 /* Modern Generate Roadmap Page */
 .generate-roadmap-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: var(--bg-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,20 +17,21 @@
   right: -10%;
   width: 500px;
   height: 500px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--accent-primary);
+  opacity: 0.05;
   border-radius: 50%;
 }
 
 .generate-roadmap-container {
-  background: #1e293b;
+  background: var(--bg-secondary);
   border-radius: var(--radius-xl);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-lg);
   padding: 48px;
   max-width: 700px;
   width: 100%;
   position: relative;
   z-index: 1;
-  border: 1px solid #334155;
+  border: 1px solid var(--border-color);
 }
 
 .generate-roadmap-container h1 {
@@ -46,7 +47,7 @@
 
 .generate-roadmap-subtitle {
   font-size: 1rem;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);
   text-align: center;
   margin-bottom: 2.5rem;
   line-height: 1.6;
@@ -68,7 +69,7 @@
 
 .form-group label {
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: var(--text-primary);
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -78,35 +79,36 @@
 .form-group select,
 .form-group textarea {
   padding: 12px 16px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   font-size: 0.95rem;
   transition: all var(--transition-base);
   font-family: inherit;
-  background: var(--color-bg-secondary);
-  color: var(--color-text-primary);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: var(--color-text-light);
+  color: var(--text-hint);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-  background: #1e293b;
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-accent);
+  background: var(--bg-secondary);
 }
 
 .form-group input:disabled,
 .form-group select:disabled,
 .form-group textarea:disabled {
-  background: var(--color-bg-primary);
-  color: var(--color-text-light);
+  background: var(--bg-tertiary);
+  color: var(--text-hint);
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* Form Row (Two Columns) */
@@ -118,15 +120,15 @@
 
 /* Error Message */
 .generate-roadmap-error {
-  background: rgba(220, 38, 38, 0.15);
-  border-left: 4px solid #dc2626;
-  color: #fca5a5;
+  background: var(--msg-error-bg);
+  border-left: 4px solid var(--color-error);
+  color: var(--msg-error-text);
   padding: 16px;
   border-radius: var(--radius-lg);
   font-size: 0.95rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 /* Form Actions */
@@ -157,7 +159,7 @@
 
 .form-btn-primary:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+  box-shadow: var(--shadow-accent-hover);
 }
 
 .form-btn-primary:active:not(:disabled) {
@@ -165,13 +167,13 @@
 }
 
 .form-btn-secondary {
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
 }
 
 .form-btn-secondary:hover:not(:disabled) {
-  background: var(--color-border);
+  background: var(--border-color);
   transform: translateY(-2px);
 }
 
@@ -182,7 +184,7 @@
 
 /* Loading State */
 .form-btn-primary:disabled {
-  background: var(--color-border);
+  background: var(--border-color);
 }
 
 /* Responsive */

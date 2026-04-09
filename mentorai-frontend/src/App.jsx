@@ -25,11 +25,10 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
-        <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
+        <Route path="/" element={<><Navbar /><Home /></>} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <><Navbar /><Login /></>} />
+        <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <><Navbar /><Register /></>} />
         <Route
           path="/dashboard"
           element={

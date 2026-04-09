@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { logout } from "../utils/auth";
+import ThemeToggle from "./ThemeToggle";
 import {
   FaTachometerAlt,
   FaProjectDiagram,
@@ -47,6 +48,9 @@ const Sidebar = () => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <div className="sidebar-header">
+        <ThemeToggle />
+      </div>
       <nav className="sidebar-nav">
         {links.map((link, i) => (
           <motion.div

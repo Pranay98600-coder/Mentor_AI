@@ -50,6 +50,15 @@ const GenerateRoadmap = () => {
   return (
     <div className="generate-roadmap-page">
       <div className="generate-roadmap-container">
+        <button
+          type="button"
+          className="form-btn form-btn-secondary"
+          onClick={() => navigate("/dashboard")}
+          style={{ alignSelf: "flex-start", marginBottom: "1.5rem" }}
+        >
+          ← Back to Dashboard
+        </button>
+
         <h1>Generate Your Roadmap</h1>
         <p className="generate-roadmap-subtitle">
           Tell us about your learning goals and we'll create a personalized roadmap for you

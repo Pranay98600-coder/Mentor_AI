@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { logout } from "../utils/auth";
 import ThemeToggle from "./ThemeToggle";
-import { useThemeLogo } from "../hooks/useThemeLogo";
 import {
   FaTachometerAlt,
   FaProjectDiagram,
@@ -14,11 +13,9 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import "./Sidebar.css";
-import "../styles/logos.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { iconLogo } = useThemeLogo();
 
   const handleLogout = () => {
     logout();
@@ -54,13 +51,6 @@ const Sidebar = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="sidebar-header">
-        <motion.div
-          className="sidebar-logo"
-          whileHover={{ scale: 1.1 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
-          <img src={iconLogo} alt="MentorAI Icon" className="icon-logo" />
-        </motion.div>
         <ThemeToggle />
       </div>
       <nav className="sidebar-nav">

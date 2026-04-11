@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useThemeLogo } from "../hooks/useThemeLogo";
 import "../components/HeroSection.css";
+import "../styles/logos.css";
 
 const HeroSection = ({ isAuthenticated }) => {
   // Get username from localStorage
   const username = localStorage.getItem("username") || "User";
+  const { fullLogo } = useThemeLogo();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -41,6 +44,11 @@ const HeroSection = ({ isAuthenticated }) => {
       initial="hidden"
       animate="visible"
     >
+      {/* Logo */}
+      <motion.div className="landing-logo" variants={itemVariants}>
+        <img src={fullLogo} alt="MentorAI Logo" />
+      </motion.div>
+
       <motion.h1 className="hero-title" variants={itemVariants}>
         MentorAI
       </motion.h1>

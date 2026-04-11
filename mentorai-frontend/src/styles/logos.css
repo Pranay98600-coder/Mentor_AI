@@ -1,0 +1,113 @@
+/* Logo Styling */
+
+.logo {
+  height: 50px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  transition: all var(--transition-base);
+}
+
+.logo img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* Icon Logo - Smaller version for sidebar/navbar */
+.icon-logo {
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+
+.icon-logo img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.icon-logo:hover {
+  transform: scale(1.1);
+  background: var(--bg-secondary);
+}
+
+/* Logo Container in Navbar */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-base);
+}
+
+.navbar-logo:hover {
+  transform: scale(1.02);
+}
+
+/* Logo Container in Sidebar */
+.sidebar-logo {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.sidebar-logo .icon-logo {
+  height: 36px;
+  width: 36px;
+}
+
+/* Logo in Landing Page */
+.landing-logo {
+  height: 60px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-logo img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo {
+    height: 40px;
+  }
+
+  .navbar-logo {
+    height: 50px;
+  }
+
+  .landing-logo {
+    height: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .icon-logo {
+    height: 28px;
+    width: 28px;
+  }
+
+  .sidebar-logo .icon-logo {
+    height: 32px;
+    width: 32px;
+  }
+}

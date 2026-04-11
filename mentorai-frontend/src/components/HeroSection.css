@@ -50,6 +50,7 @@
 .hero-title {
   font-size: 3.5rem;
   font-weight: 800;
+  color: white;
   background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 50%, #7c3aed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -59,6 +60,7 @@
   text-align: center;
   max-width: 800px;
   animation: gradientShift 6s ease infinite;
+  background-attachment: fixed;
   filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.3));
   position: relative;
   z-index: 1;

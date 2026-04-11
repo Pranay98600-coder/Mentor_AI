@@ -108,14 +108,11 @@
   font-size: 3rem;
   line-height: 1;
   transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.3));
   display: flex;
   align-items: center;
   justify-content: center;
+  color: inherit;
 }
 
 .feature-card:hover .feature-icon {
@@ -237,4 +234,8 @@
 
 [data-theme="light"] .feature-description {
   color: #64748b;
+}
+
+[data-theme="light"] .feature-icon {
+  filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.2));
 }

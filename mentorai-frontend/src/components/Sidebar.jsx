@@ -9,6 +9,7 @@ import {
   FaChartBar,
   FaUser,
   FaComments,
+  FaHome,
   FaSignOutAlt,
 } from "react-icons/fa";
 import "./Sidebar.css";
@@ -76,10 +77,32 @@ const Sidebar = () => {
             </NavLink>
           </motion.div>
         ))}
+        {/* Home Button */}
+        <motion.div
+          custom={links.length}
+          variants={linkVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <NavLink
+            to="/"
+            className="sidebar-link"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, x: 5 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              style={{ display: "flex", alignItems: "center", gap: "8px" }}
+            >
+              <FaHome /> Home
+            </motion.div>
+          </NavLink>
+        </motion.div>
+        {/* Logout Button */}
         <motion.button
           className="sidebar-link logout"
           onClick={handleLogout}
-          custom={links.length}
+          custom={links.length + 1}
           variants={linkVariants}
           initial="hidden"
           animate="visible"

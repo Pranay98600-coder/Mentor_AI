@@ -40,6 +40,7 @@ const ProgressAnalytics = () => {
   const [currentStreak, setCurrentStreak] = useState(0);
   const [lastActiveDate, setLastActiveDate] = useState("");
   const [weakAreas, setWeakAreas] = useState([]);
+  const [strongAreas, setStrongAreas] = useState([]);
   const [completedTopics, setCompletedTopics] = useState(0);
   const [totalTopics, setTotalTopics] = useState(0);
 
@@ -186,6 +187,7 @@ const ProgressAnalytics = () => {
         setOverallProgress(0);
         setCurrentStreak(0);
         setWeakAreas([]);
+        setStrongAreas([]);
         return;
       }
 
@@ -201,6 +203,13 @@ const ProgressAnalytics = () => {
         .sort((a, b) => a.after - b.after)
         .slice(0, 3);
       setWeakAreas(weak);
+
+      // Strong Areas (topics with high knowledge)
+      const strong = data
+        .filter((item) => item.after >= 7)
+        .sort((a, b) => b.after - a.after)
+        .slice(0, 2);
+      setStrongAreas(strong);
 
       // Streak Calculation - for this roadmap
       const validDates = rawData
@@ -449,16 +458,39 @@ const ProgressAnalytics = () => {
               </div>
             </section>
 
+            {/* AI Recommendations - Simple Banner */}
+            {(weakAreas.length > 0 || strongAreas.length > 0) && (
+              <section className="ai-recommendations-banner">
+                <div className="recommendations-content">
+                  {weakAreas.length > 0 && (
+                    <div className="rec-item focus">
+                      <span className="rec-label">⚠️ Focus on:</span>
+                      <span className="rec-topics">{weakAreas.slice(0, 2).map(t => t.topic).join(", ")}</span>
+                    </div>
+                  )}
+                  {strongAreas.length > 0 && (
+                    <div className="rec-item strong">
+                      <span className="rec-label">🔥 Strong in:</span>
+                      <span className="rec-topics">{strongAreas.slice(0, 2).map(t => t.topic).join(", ")}</span>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+
             {/* Key Metrics */}
             <section className="analytics-metrics">
-              <div className="metric-card">
+              <div className="metric-card progress-metric-card">
                 <div className="metric-value">{overallProgress}%</div>
                 <div className="metric-label">Roadmap Progress</div>
                 <div className="metric-bar">
                   <div
                     className="metric-fill"
                     style={{ width: `${overallProgress}%` }}
-                  ></div>
+                  >
+                    {overallProgress > 5 && <span style={{ fontSize: "0.85rem", fontWeight: "700", color: "white" }}>{overallProgress}%</span>}
+                  </div>
+                  {overallProgress <= 5 && <span style={{ fontSize: "0.85rem", fontWeight: "700", color: "var(--accent-primary)", marginLeft: "0.5rem" }}>{overallProgress}%</span>}
                 </div>
               </div>
 

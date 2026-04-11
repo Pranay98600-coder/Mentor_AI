@@ -3,9 +3,9 @@ import HeroSection from "../components/HeroSection";
 import FeaturesSection from "../components/FeaturesSection";
 import "../styles/navbar.css";
 
-const Home = () => (
+const Home = ({ isAuthenticated }) => (
   <div className="home-page">
-    <HeroSection />
+    <HeroSection isAuthenticated={isAuthenticated} />
     <FeaturesSection />
   </div>
 );

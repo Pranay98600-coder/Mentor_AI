@@ -109,7 +109,7 @@
 /* Metrics Section */
 .analytics-metrics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
@@ -118,7 +118,7 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: var(--shadow-md);
   transition: all var(--transition-base);
 }
@@ -127,6 +127,16 @@
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
   border-color: var(--accent-primary);
+}
+
+.metric-card.progress-metric-card {
+  grid-column: 1 / -1;
+  padding: 2.5rem;
+}
+
+.progress-metric-card .metric-bar {
+  height: 28px;
+  margin-top: 1.5rem;
 }
 
 .metric-value {
@@ -157,18 +167,25 @@
 
 .metric-bar {
   width: 100%;
-  height: 6px;
+  height: 18px;
   background: var(--bg-tertiary);
-  border-radius: 3px;
+  border-radius: 9px;
   overflow: hidden;
   margin-top: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .metric-fill {
   height: 100%;
   background: var(--gradient-primary);
   transition: width 0.5s ease-out;
-  border-radius: 3px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
 }
 
 /* Charts Grid */
@@ -223,6 +240,72 @@
   width: 12px;
   height: 12px;
   border-radius: 2px;
+}
+
+/* AI Recommendations Banner - Simple & Minimal */
+.ai-recommendations-banner {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.recommendations-content {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.rec-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex: 1;
+  min-width: 250px;
+}
+
+.rec-label {
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.rec-topics {
+  color: var(--accent-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.rec-item.focus .rec-topics {
+  color: #ef4444;
+}
+
+.rec-item.strong .rec-topics {
+  color: #22c55e;
+}
+
+@media (max-width: 768px) {
+  .ai-recommendations-banner {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .recommendations-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rec-item {
+    min-width: unset;
+  }
 }
 
 /* Weak Areas Section */

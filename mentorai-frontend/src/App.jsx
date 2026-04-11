@@ -1,6 +1,6 @@
 
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
@@ -20,13 +20,23 @@ import "./styles/roadmap.css";
 import "./styles/auth.css";
 
 function App() {
+  // Clear old sessions on first app load
+  useEffect(() => {
+    const isVisited = sessionStorage.getItem("visited");
+    if (!isVisited) {
+      // First time visiting - clear old login session
+      localStorage.clear();
+      sessionStorage.setItem("visited", "true");
+    }
+  }, []);
+
   // Check if user is authenticated
   const isAuthenticated = !!localStorage.getItem("token");
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<><Navbar /><Home /></>} />
+        <Route path="/" element={<><Navbar /><Home isAuthenticated={isAuthenticated} /></>} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <><Navbar /><Login /></>} />
         <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <><Navbar /><Register /></>} />
         <Route

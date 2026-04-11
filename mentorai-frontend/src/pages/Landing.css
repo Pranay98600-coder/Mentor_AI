@@ -1,7 +1,35 @@
-/* Landing Page Styles */
+/* Landing Page Styles - Premium Modern AI Aesthetic */
 .landing-page {
   min-height: 100vh;
-  background: var(--bg-primary);
+  background: linear-gradient(180deg, #020617 0%, #0a0a15 50%, #1a1a2e 100%);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling behavior */
+.landing-page {
+  scroll-behavior: smooth;
+}
+
+/* Gradient overlay for depth */
+.landing-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 10% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 90% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content is above gradient */
+.landing-page > * {
+  position: relative;
+  z-index: 1;
 }

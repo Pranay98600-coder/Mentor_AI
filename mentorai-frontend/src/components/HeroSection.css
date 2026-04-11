@@ -1,109 +1,214 @@
-/* Hero Section - SaaS Professional */
+/* Hero Section - Premium Modern AI Aesthetic */
 .hero-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 5rem 1rem 3rem 1rem;
-  background: var(--bg-primary);
+  background: radial-gradient(circle at 20% 20%, #1e1b4b 0%, #020617 50%, #0a0a15 100%);
   min-height: 70vh;
   position: relative;
+  overflow: hidden;
+}
+
+/* Animated background glow shapes */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  top: -200px;
+  left: -200px;
+  animation: float 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  bottom: -150px;
+  right: -150px;
+  animation: float 25s ease-in-out infinite 2s;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(30px) translateX(20px);
+  }
 }
 
 .hero-title {
   font-size: 3.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-weight: 800;
+  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 50%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
   letter-spacing: -0.5px;
   text-align: center;
   max-width: 800px;
+  animation: gradientShift 6s ease infinite;
+  filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.3));
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(124, 58, 237, 0.4));
+  }
 }
 
 .hero-tagline {
   font-size: 1.3rem;
-  color: var(--accent-primary);
+  color: #cbd5f5;
   margin-bottom: 1rem;
   font-weight: 500;
   letter-spacing: 0.3px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-desc {
   font-size: 1.1rem;
-  color: var(--text-secondary);
+  color: #a8afd4;
   max-width: 600px;
   text-align: center;
   margin-bottom: 2.5rem;
-  line-height: 1.6;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
 }
 
+/* Glass morphism button container */
 .hero-cta {
   display: flex;
   gap: 1.2rem;
   flex-wrap: wrap;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+  animation: glassGlow 3s ease-in-out infinite;
+}
+
+@keyframes glassGlow {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(124, 58, 237, 0.1);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 80px rgba(124, 58, 237, 0.2);
+  }
 }
 
 .hero-btn {
-  padding: 12px 32px;
-  border-radius: var(--radius-lg);
+  padding: 14px 36px;
+  border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
   border: none;
   cursor: pointer;
   text-decoration: none;
-  transition: all var(--transition-base);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: inline-block;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Primary button with gradient */
 .hero-btn.primary {
-  background: var(--accent-primary);
+  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
   color: white;
-  box-shadow: var(--shadow-accent);
+  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+  font-weight: 700;
+}
+
+.hero-btn.primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
 }
 
 .hero-btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-accent-hover);
-  background: var(--accent-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.6);
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
 }
 
+.hero-btn.primary:hover::before {
+  left: 100%;
+}
+
+/* Secondary button with glass effect */
 .hero-btn.secondary {
-  background: var(--bg-secondary);
-  color: var(--accent-primary);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5f5;
+  border: 1.5px solid rgba(124, 58, 237, 0.5);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .hero-btn.secondary:hover {
-  background: var(--bg-tertiary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--accent-primary);
+  background: rgba(124, 58, 237, 0.15);
+  color: #e0c3fc;
+  transform: translateY(-4px);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), 0 8px 25px rgba(124, 58, 237, 0.3);
+  border-color: #7c3aed;
 }
 
 .hero-btn.logout {
-  background: #ef4444;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
-  border: 1px solid #dc2626;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+  border: none;
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+  font-weight: 700;
 }
 
 .hero-btn.logout:hover:not(:disabled) {
-  background: #dc2626;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(239, 68, 68, 0.6);
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
 }
 
 .hero-btn.logout:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 @media (max-width: 768px) {
   .hero-section {
     min-height: 60vh;
     padding: 3rem 1rem 2rem 1rem;
+  }
+
+  .hero-section::before,
+  .hero-section::after {
+    display: none;
   }
 
   .hero-title {
@@ -120,10 +225,13 @@
 
   .hero-cta {
     gap: 1rem;
+    padding: 1.5rem;
+    flex-direction: column;
   }
 
   .hero-btn {
-    padding: 10px 24px;
+    padding: 12px 28px;
     font-size: 0.95rem;
+    width: 100%;
   }
 }

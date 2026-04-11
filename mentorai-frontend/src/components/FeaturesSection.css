@@ -1,8 +1,24 @@
-/* Features Section - SaaS Professional */
+/* Features Section - Premium Modern AI Aesthetic */
 .features-section {
   padding: 5rem 1rem;
-  background: var(--bg-primary);
+  background: linear-gradient(180deg, #0a0a15 0%, #1a1a2e 50%, #0f0f1e 100%);
   min-height: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background animation */
+.features-section::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 20%;
+  right: -10%;
+  animation: float 30s ease-in-out infinite;
+  pointer-events: none;
 }
 
 /* Features Header */
@@ -12,87 +28,127 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .features-title {
   font-size: 2.8rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-weight: 800;
+  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
   letter-spacing: -0.5px;
 }
 
 .features-subtitle {
   font-size: 1.1rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  color: #a8afd4;
+  line-height: 1.7;
 }
 
 /* Features Grid */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* Feature Card - SaaS Design */
+/* Feature Card - Premium Glass Morphism */
 .feature-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
   text-align: center;
-  transition: all var(--transition-base);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1);
   position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
 .feature-card:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--accent-primary);
-  box-shadow: var(--shadow-accent-hover);
-  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(124, 58, 237, 0.6);
+  box-shadow: 0 15px 50px rgba(124, 58, 237, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+  transform: translateY(-8px);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
 }
 
 /* Feature Icon */
 .feature-icon {
-  font-size: 2.5rem;
+  font-size: 3rem;
   line-height: 1;
-  transition: all var(--transition-base);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.3));
 }
 
 .feature-card:hover .feature-icon {
-  transform: scale(1.15) rotate(3deg);
+  transform: scale(1.25) rotate(8deg);
+  filter: drop-shadow(0 0 25px rgba(124, 58, 237, 0.5));
 }
 
 /* Feature Title */
 .feature-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #e0c3fc;
   letter-spacing: -0.3px;
   margin: 0;
+  position: relative;
+  z-index: 2;
 }
 
 /* Feature Description */
 .feature-description {
   font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  color: #a8afd4;
+  line-height: 1.7;
   margin: 0;
+  position: relative;
+  z-index: 2;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .features-section {
     padding: 3.5rem 1rem;
+  }
+
+  .features-section::before {
+    display: none;
   }
 
   .features-title {
@@ -105,15 +161,15 @@
 
   .features-grid {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
+    gap: 1.5rem;
   }
 
   .feature-card {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
 
   .feature-icon {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .feature-title {
@@ -129,6 +185,7 @@
 @media (min-width: 1024px) {
   .features-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
   }
 }
 

@@ -275,6 +275,7 @@
 
 [data-theme="light"] .hero-btn.primary {
   background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+  color: black;
   box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
 }
 

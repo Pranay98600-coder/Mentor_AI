@@ -113,6 +113,9 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .feature-card:hover .feature-icon {
@@ -194,4 +197,44 @@
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* Light Mode Support */
+[data-theme="light"] .features-section {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+}
+
+[data-theme="light"] .features-section::before {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.04) 0%, transparent 70%);
+}
+
+[data-theme="light"] .features-title {
+  background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="light"] .features-subtitle {
+  color: #475569;
+}
+
+[data-theme="light"] .feature-card {
+  background: rgba(124, 58, 237, 0.05);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 1px 2px rgba(124, 58, 237, 0.1);
+}
+
+[data-theme="light"] .feature-card:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.15), inset 0 1px 2px rgba(124, 58, 237, 0.15);
+}
+
+[data-theme="light"] .feature-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .feature-description {
+  color: #64748b;
 }

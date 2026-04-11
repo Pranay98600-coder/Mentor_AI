@@ -6,22 +6,34 @@ import logoIcon from "../assets/logos/logo-icon.png";
 /**
  * Custom hook to get the correct logo based on current theme
  * Returns appropriate logo for dark/light mode and icon
+ * Listens for theme changes and updates automatically
  */
 export const useThemeLogo = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState(() => {
+    // Get theme from localStorage on initial load
+    return localStorage.getItem("theme") || "dark";
+  });
 
   useEffect(() => {
-    // Get current theme from localStorage
-    const currentTheme = localStorage.getItem("theme") || "dark";
-    setTheme(currentTheme);
-
-    // Listen for theme changes
+    // Listen for theme changes from ThemeToggle component
     const handleThemeChange = (e) => {
-      setTheme(e.detail?.theme || "dark");
+      const newTheme = e.detail?.theme || localStorage.getItem("theme") || "dark";
+      setTheme(newTheme);
+    };
+
+    // Also listen for storage changes (in case theme changes in another tab)
+    const handleStorageChange = () => {
+      const newTheme = localStorage.getItem("theme") || "dark";
+      setTheme(newTheme);
     };
 
     window.addEventListener("themeChange", handleThemeChange);
-    return () => window.removeEventListener("themeChange", handleThemeChange);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("themeChange", handleThemeChange);
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   return {

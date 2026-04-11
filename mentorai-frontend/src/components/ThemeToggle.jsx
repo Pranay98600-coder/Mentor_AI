@@ -43,6 +43,9 @@ const ThemeToggle = () => {
     // Persist to localStorage
     localStorage.setItem('theme', newTheme);
 
+    // Dispatch custom event for other components (e.g., logo switching)
+    window.dispatchEvent(new CustomEvent('themeChange', { detail: { theme: newTheme } }));
+
     // Optional: Track theme change in analytics
     if (window.gtag) {
       window.gtag('event', 'theme_toggle', { theme: newTheme });

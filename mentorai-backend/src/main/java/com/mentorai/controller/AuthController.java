@@ -21,13 +21,18 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest request) {
 
-        System.out.println("PASSWORD RECEIVED: " + request.getPassword());
+        // 🔥 Debug (very important)
+        System.out.println("🔥 NAME: " + request.getName());
+        System.out.println("🔥 EMAIL: " + request.getEmail());
+        System.out.println("🔥 PASSWORD: " + request.getPassword());
 
+        // ✅ Convert DTO → Entity
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
 
+        // ✅ Call service
         return authService.register(user);
     }
 

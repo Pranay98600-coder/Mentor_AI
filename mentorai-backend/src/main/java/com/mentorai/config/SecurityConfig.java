@@ -4,6 +4,7 @@ import com.mentorai.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
@@ -23,12 +24,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            .cors(cors -> {})
+            .cors(cors -> {}) // ✅ use global CorsConfig
             .csrf(csrf -> csrf.disable())
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
 
             .authorizeHttpRequests(auth -> auth
+
+                // ✅ VERY IMPORTANT (fix CORS preflight)
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 // ✅ PUBLIC endpoints
                 .requestMatchers("/", "/health").permitAll()

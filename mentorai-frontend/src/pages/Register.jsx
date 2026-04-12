@@ -23,10 +23,19 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    // Debug: Log the data being sent
+    console.log("Register attempt:", {
+      name: name.trim(),
+      email: email.trim(),
+      password: password.trim()
+    });
+
     try {
-      await register(name, email, password);
+      await register(name.trim(), email.trim(), password.trim());
       navigate("/login");
     } catch (err) {
+      console.error("Registration error:", err.response?.data);
       setError(err.response?.data?.message || "Registration failed");
     }
   };

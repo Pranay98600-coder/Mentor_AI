@@ -23,18 +23,26 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    // Debug: Log the data being sent
+    console.log("Login attempt:", {
+      email: email.trim(),
+      password: password.trim()
+    });
+
     try {
-      const data = await login(email, password);
-      
+      const data = await login(email.trim(), password.trim());
+
       // Save user data using centralized utility
       saveUserData({
         token: data.token,
         username: data.username,
         email: data.email,
       });
-      
+
       navigate("/dashboard");
     } catch (err) {
+      console.error("Login error:", err.response?.data);
       setError(err.response?.data?.message || "Login failed");
     }
   };

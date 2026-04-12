@@ -29,9 +29,7 @@ public class RoadmapController {
 
         String email = authentication.getName();
 
-        Roadmap roadmap = roadmapService.generateRoadmap(request, email);
-
-        return mapToResponse(roadmap);
+        return mapToResponse(roadmapService.generateRoadmap(request, email));
     }
 
     // 🔥 GET ALL USER ROADMAPS
@@ -43,7 +41,7 @@ public class RoadmapController {
         return roadmapService.getUserRoadmaps(email)
                 .stream()
                 .map(this::mapToResponse)
-                .collect(Collectors.toList()); // ✅ correct (STS compatible)
+                .collect(Collectors.toList());
     }
 
     // 🔥 DELETE
@@ -66,18 +64,13 @@ public class RoadmapController {
 
         String email = authentication.getName();
 
-        Roadmap roadmap = roadmapService.regenerateRoadmap(id, request, email);
-
-        return mapToResponse(roadmap);
+        return mapToResponse(
+                roadmapService.regenerateRoadmap(id, request, email)
+        );
     }
 
-    // 🔥 COMMON MAPPER METHOD (VERY IMPORTANT)
+    // 🔥 COMMON MAPPER METHOD
     private RoadmapResponse mapToResponse(Roadmap roadmap){
-
-        // ✅ SAFETY CHECK (avoid NullPointerException)
-        if (roadmap.getUser() == null) {
-            throw new RuntimeException("User not found in roadmap");
-        }
 
         UserResponse userResponse = UserResponse.builder()
                 .id(roadmap.getUser().getId())

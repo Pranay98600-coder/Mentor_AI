@@ -8,6 +8,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -20,32 +23,34 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
+    // 🔥 MAIN SECURITY CONFIG
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            .cors(cors -> {}) // ✅ use global CorsConfig
+            .cors(cors -> {}) // use your CorsConfig
             .csrf(csrf -> csrf.disable())
-            .formLogin(form -> form.disable())
-            .httpBasic(basic -> basic.disable())
+
+            .formLogin(form -> form.disable())   // ❌ disable default login
+            .httpBasic(basic -> basic.disable()) // ❌ disable basic auth
 
             .authorizeHttpRequests(auth -> auth
 
-                // ✅ VERY IMPORTANT (fix CORS preflight)
+                // ✅ CORS preflight
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                // ✅ PUBLIC endpoints
+                // ✅ PUBLIC
                 .requestMatchers("/", "/health").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
 
-                // 🔐 ROLE BASED
+                // 🔐 ROLE BASED (optional)
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
 
-                // 🔒 AUTH REQUIRED
+                // 🔒 PROTECTED
                 .requestMatchers("/api/roadmap/**").authenticated()
 
-                // 🔒 everything else
+                // 🔒 EVERYTHING ELSE
                 .anyRequest().authenticated()
             )
 
@@ -53,9 +58,18 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
 
+            // 🔥 JWT FILTER
             .addFilterBefore(jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    // 🔥 VERY IMPORTANT → DISABLE DEFAULT SPRING USER
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            throw new UsernameNotFoundException("User not found");
+        };
     }
 }

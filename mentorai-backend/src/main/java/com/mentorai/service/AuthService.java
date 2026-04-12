@@ -29,7 +29,18 @@ public class AuthService {
 
     // REGISTER
     public String register(User user) {
+        // ✅ Trim inputs for safety (defense in depth)
+        if (user.getName() != null) {
+            user.setName(user.getName().trim());
+        }
+        if (user.getEmail() != null) {
+            user.setEmail(user.getEmail().trim());
+        }
+        if (user.getPassword() != null) {
+            user.setPassword(user.getPassword().trim());
+        }
 
+        // ✅ Encode trimmed password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         user.setRole(Role.USER);
@@ -43,6 +54,9 @@ public class AuthService {
 
     // LOGIN
     public LoginResponse login(String email, String password) {
+        // ✅ Trim inputs for safety
+        email = email != null ? email.trim() : email;
+        password = password != null ? password.trim() : password;
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -58,7 +72,7 @@ public class AuthService {
 
         return new LoginResponse(
                 token,
-                user.getName(),   // 🔥 IMPORTANT
+                user.getName(),
                 user.getEmail()
         );
     }

@@ -22,30 +22,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-    	http
-    	.cors(cors -> {})
-        .csrf(csrf -> csrf.disable())
-        .formLogin(form -> form.disable())
-        .httpBasic(basic -> basic.disable())
+        http
+            .cors(cors -> {})
+            .csrf(csrf -> csrf.disable())
+            .formLogin(form -> form.disable())
+            .httpBasic(basic -> basic.disable())
 
-        .authorizeHttpRequests(auth -> auth
+            .authorizeHttpRequests(auth -> auth
+
+                // ✅ PUBLIC endpoints
+                .requestMatchers("/", "/health").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
+
+                // 🔐 ROLE BASED
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+
+                // 🔒 AUTH REQUIRED
                 .requestMatchers("/api/roadmap/**").authenticated()
 
-                .requestMatchers("/api/admin/**")
-                .hasRole("ADMIN")
-
-                .requestMatchers("/api/user/**")
-                .hasAnyRole("USER", "ADMIN")
-
+                // 🔒 everything else
                 .anyRequest().authenticated()
-        )
+            )
 
-        .sessionManagement(session ->
+            .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
+            )
 
-        .addFilterBefore(jwtAuthenticationFilter,
+            .addFilterBefore(jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

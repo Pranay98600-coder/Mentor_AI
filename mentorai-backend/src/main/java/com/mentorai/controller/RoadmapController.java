@@ -43,7 +43,7 @@ public class RoadmapController {
         return roadmapService.getUserRoadmaps(email)
                 .stream()
                 .map(this::mapToResponse)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // ✅ correct (STS compatible)
     }
 
     // 🔥 DELETE
@@ -73,6 +73,11 @@ public class RoadmapController {
 
     // 🔥 COMMON MAPPER METHOD (VERY IMPORTANT)
     private RoadmapResponse mapToResponse(Roadmap roadmap){
+
+        // ✅ SAFETY CHECK (avoid NullPointerException)
+        if (roadmap.getUser() == null) {
+            throw new RuntimeException("User not found in roadmap");
+        }
 
         UserResponse userResponse = UserResponse.builder()
                 .id(roadmap.getUser().getId())

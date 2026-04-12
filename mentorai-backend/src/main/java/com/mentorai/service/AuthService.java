@@ -26,25 +26,38 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
     }
+    
+ // Helper method (OPTIONAL but clean)
+    private String trim(String value) {
+        return value == null ? null : value.trim();
+    }
 
     // REGISTER
     public String register(User user) {
-        // ✅ Trim inputs for safety (defense in depth)
-        if (user.getName() != null) {
-            user.setName(user.getName().trim());
-        }
-        if (user.getEmail() != null) {
-            user.setEmail(user.getEmail().trim());
-        }
-        if (user.getPassword() != null) {
-            user.setPassword(user.getPassword().trim());
+
+        // ✅ Trim inputs
+        user.setName(trim(user.getName()));
+        user.setEmail(trim(user.getEmail()));
+        user.setPassword(trim(user.getPassword()));
+
+        // ✅ Validation
+        if (user.getEmail() == null || user.getEmail().isEmpty()) {
+            throw new RuntimeException("Email cannot be empty");
         }
 
-        // ✅ Encode trimmed password
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+            throw new RuntimeException("Password cannot be empty");
+        }
+
+        // ✅ Prevent duplicate users
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
+
+        // ✅ Encode password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         user.setRole(Role.USER);
-
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
@@ -54,15 +67,17 @@ public class AuthService {
 
     // LOGIN
     public LoginResponse login(String email, String password) {
-        // ✅ Trim inputs for safety
-        email = email != null ? email.trim() : email;
-        password = password != null ? password.trim() : password;
+
+        // ✅ Trim inputs
+        email = trim(email);
+        password = trim(password);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
+        // ✅ Secure error message
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new RuntimeException("Invalid email or password");
         }
 
         String token = jwtUtil.generateToken(

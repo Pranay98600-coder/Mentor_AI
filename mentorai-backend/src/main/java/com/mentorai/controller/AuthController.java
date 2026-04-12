@@ -19,6 +19,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@RequestBody User user) {
+    	System.out.println("RAW PASSWORD FROM REQUEST: " + user.getPassword());
         return authService.register(user);
     }
 

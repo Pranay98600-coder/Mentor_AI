@@ -65,11 +65,17 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 🔥 VERY IMPORTANT → DISABLE DEFAULT SPRING USER
+    
+    
     @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> {
-            throw new UsernameNotFoundException("User not found");
-        };
+    public org.springframework.security.crypto.password.PasswordEncoder passwordEncoder() {
+        return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public org.springframework.security.authentication.AuthenticationManager authenticationManager(
+            org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration config
+    ) throws Exception {
+        return config.getAuthenticationManager();
     }
 }

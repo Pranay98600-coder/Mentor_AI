@@ -1,6 +1,5 @@
 package com.mentorai.service;
 
-import com.mentorai.dto.RoadmapItem;
 import com.mentorai.dto.RoadmapRequest;
 import com.mentorai.model.Roadmap;
 import com.mentorai.model.RoadmapTopic;
@@ -8,11 +7,11 @@ import com.mentorai.model.User;
 import com.mentorai.repository.RoadmapRepository;
 import com.mentorai.repository.UserRepository;
 
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class RoadmapService {
@@ -24,16 +23,16 @@ public class RoadmapService {
 
     public RoadmapService(RoadmapRepository roadmapRepository,
                           UserRepository userRepository,
-                          YoutubeService youtubeService,AiService aiService) {
+                          YoutubeService youtubeService,
+                          AiService aiService) {
 
         this.roadmapRepository = roadmapRepository;
         this.userRepository = userRepository;
         this.youtubeService = youtubeService;
         this.aiService = aiService;
     }
-    
-    
-    
+
+    // 🔥 BUILD AI PROMPT
     private String buildPrompt(RoadmapRequest request) {
 
         return "You are an expert software mentor.\n\n" +
@@ -47,28 +46,26 @@ public class RoadmapService {
                 "Timeline: " + request.getTimeline() + "\n" +
                 "Learning Style: " + request.getLearningStyle() + "\n" +
                 "Working Status: " + request.getWorkingStatus() + "\n\n" +
-                "Special Instructions: " + 
+                "Special Instructions: " +
                 (request.getCustomNote() != null ? request.getCustomNote() : "None") + "\n\n" +
 
                 "Rules:\n" +
-                "- Give a complete roadmap with 15 to 20 topics "+
-                "-Each topic MUST include the main subject"+
-                "-Exmaple:if topic is c++ then 'C++ Control Flow' , 'C++ OOP' " +
+                "- Give a complete roadmap with 15 to 20 topics\n" +
+                "- Each topic MUST include the main subject\n" +
+                "- Example: 'C++ Control Flow', 'C++ OOP'\n" +
                 "- Each topic should be short and clear\n" +
-                "- Order them from beginner to advanced\n" +
+                "- Order from beginner to advanced\n" +
                 "- Do NOT add explanation\n" +
                 "- Only return plain list\n";
     }
 
-    
-    
-    
+    // 🔥 GENERATE ROADMAP
     public Roadmap generateRoadmap(RoadmapRequest request, String email) {
 
-        // 🔥 get user from DB
+        // Get user
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        
+
         String mainTopic = request.getTopic();
 
         String prompt = buildPrompt(request);
@@ -77,9 +74,7 @@ public class RoadmapService {
         Roadmap roadmap = new Roadmap();
         roadmap.setMainTopic(mainTopic);
         roadmap.setCreatedAt(LocalDateTime.now());
-
-        // 🔥 VERY IMPORTANT (link roadmap to user)
-        roadmap.setUser(user);
+        roadmap.setUser(user); // 🔥 link user
 
         List<RoadmapTopic> roadmapTopics = new ArrayList<>();
 
@@ -99,9 +94,8 @@ public class RoadmapService {
 
         return roadmapRepository.save(roadmap);
     }
-    
-    
-    
+
+    // 🔥 GET USER ROADMAPS
     public List<Roadmap> getUserRoadmaps(String email){
 
         User user = userRepository.findByEmail(email)
@@ -109,51 +103,44 @@ public class RoadmapService {
 
         return roadmapRepository.findByUser(user);
     }
-    
-    
-    
+
+    // 🔥 DELETE ROADMAP
     public void deleteRoadmap(Long roadmapId, String email) {
 
-        // Get user
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Get roadmap
         Roadmap roadmap = roadmapRepository.findById(roadmapId)
                 .orElseThrow(() -> new RuntimeException("Roadmap not found"));
 
-        // 🔥 SECURITY CHECK (VERY IMPORTANT)
+        // 🔐 SECURITY CHECK
         if (!roadmap.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("Unauthorized to delete this roadmap");
         }
 
-        // Delete
         roadmapRepository.delete(roadmap);
     }
-    
+
+    // 🔥 REGENERATE ROADMAP (CLEAN VERSION)
     public Roadmap regenerateRoadmap(Long roadmapId,
-            RoadmapRequest request,
-            String email) {
+                                     RoadmapRequest request,
+                                     String email) {
 
-// 🔥 Get user
-    	User user = userRepository.findByEmail(email)
-    			.orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-// 🔥 Get existing roadmap
-    	Roadmap oldRoadmap = roadmapRepository.findById(roadmapId)
-    			.orElseThrow(() -> new RuntimeException("Roadmap not found"));
+        Roadmap oldRoadmap = roadmapRepository.findById(roadmapId)
+                .orElseThrow(() -> new RuntimeException("Roadmap not found"));
 
-// 🔥 SECURITY CHECK
-    	if (!oldRoadmap.getUser().getId().equals(user.getId())) {
-    		throw new RuntimeException("Unauthorized");
-    	}
+        // 🔐 SECURITY CHECK
+        if (!oldRoadmap.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Unauthorized");
+        }
 
-// 🔥 DELETE OLD ROADMAP
-    	roadmapRepository.delete(oldRoadmap);
+        // Delete old
+        roadmapRepository.delete(oldRoadmap);
 
-// 🔥 GENERATE NEW (reuse existing logic)
-    	return generateRoadmap(request, email);
+        // Generate new
+        return generateRoadmap(request, email);
     }
-    
-    
 }

@@ -2,6 +2,7 @@ package com.mentorai.controller;
 
 import com.mentorai.dto.LoginRequest;
 import com.mentorai.dto.LoginResponse;
+import com.mentorai.dto.RegisterRequest;
 import com.mentorai.model.User;
 import com.mentorai.service.AuthService;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
-    	System.out.println("RAW PASSWORD FROM REQUEST: " + user.getPassword());
+    public String register(@RequestBody RegisterRequest request) {
+
+        System.out.println("PASSWORD RECEIVED: " + request.getPassword());
+
+        User user = new User();
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+
         return authService.register(user);
     }
 

@@ -22,6 +22,8 @@ import {
 import Sidebar from "../components/Sidebar";
 import { getProgress } from "../services/progressService";
 import { getMyRoadmaps } from "../services/roadmapService";
+// ADDED: Import formatDate for safe date formatting
+import { formatDate } from "../utils/auth";
 import "../styles/dashboard.css";
 import "../styles/analytics.css";
 
@@ -44,6 +46,30 @@ const ProgressAnalytics = () => {
   const [completedTopics, setCompletedTopics] = useState(0);
   const [totalTopics, setTotalTopics] = useState(0);
 
+  // ADDED: Safe date parsing utility
+  const parseDate = (dateString) => {
+    if (!dateString) return null;
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return null;
+      return date;
+    } catch {
+      return null;
+    }
+  };
+
+  // ADDED: Safe date formatting for display (only date part)
+  const formatDateOnly = (dateString) => {
+    if (!dateString) return "Unknown";
+    const date = parseDate(dateString);
+    if (!date) return "Unknown";
+    try {
+      return date.toISOString().split("T")[0];
+    } catch {
+      return "Unknown";
+    }
+  };
+
   // Get selected roadmap object from ID (convert to string for comparison)
   const selectedRoadmap = roadmaps.find(
     (r) => String(r._id) === String(selectedRoadmapId) || String(r.id) === String(selectedRoadmapId)
@@ -56,10 +82,9 @@ const ProgressAnalytics = () => {
       setRefreshing(true);
       setError("");
 
-      // Fetch roadmaps
-      console.log("Fetching roadmaps...");
+      // REMOVED: console.log("Fetching roadmaps...");
       const roadmapsData = await getMyRoadmaps();
-      console.log("Roadmaps received:", roadmapsData);
+      // REMOVED: console.log("Roadmaps received:", roadmapsData);
 
       if (Array.isArray(roadmapsData) && roadmapsData.length > 0) {
         setRoadmaps(roadmapsData);
@@ -73,18 +98,17 @@ const ProgressAnalytics = () => {
         setError("No roadmaps found. Create a roadmap first!");
       }
 
-      // Fetch progress data
-      console.log("Fetching progress data...");
+      // REMOVED: console.log("Fetching progress data...");
       const progressData = await getProgress();
-      console.log("Progress data received:", progressData);
+      // REMOVED: console.log("Progress data received:", progressData);
       if (Array.isArray(progressData)) {
         setAllProgressData(progressData);
       } else {
         setAllProgressData([]);
       }
     } catch (err) {
-      console.error("Error loading data:", err);
-      setError("Failed to load analytics data. Please try again.");
+      // REMOVED: console.error("Error loading data:", err);
+      setError("Failed to load analytics data. Please try again");
     } finally {
       setRefreshing(false);
       setLoading(false);
@@ -99,7 +123,7 @@ const ProgressAnalytics = () => {
   // Refetch when user returns to this tab
   useEffect(() => {
     const handleVisibilityChange = () => {
-      console.log("Page visibility changed. Hidden:", document.hidden);
+      // REMOVED: console.log("Page visibility changed. Hidden:", document.hidden);
       if (!document.hidden) {
         loadData(true); // Refresh without loading spinner
       }
@@ -111,10 +135,10 @@ const ProgressAnalytics = () => {
 
   // Filter data when selected roadmap or progress data changes
   useEffect(() => {
-    console.log("Filtering effect triggered. SelectedRoadmap:", selectedRoadmap);
+    // REMOVED: console.log("Filtering effect triggered. SelectedRoadmap:", selectedRoadmap);
 
     if (!selectedRoadmap || !selectedRoadmap.topics || selectedRoadmap.topics.length === 0) {
-      console.log("No selected roadmap or topics");
+      // REMOVED: console.log("No selected roadmap or topics");
       setFilteredData([]);
       setTotalTopics(0);
       setCompletedTopics(0);
@@ -133,8 +157,8 @@ const ProgressAnalytics = () => {
           }).filter(Boolean)
         : [];
 
-      console.log("Extracted roadmap topic names:", roadmapTopicNames);
-      console.log("All progress data:", allProgressData);
+      // REMOVED: console.log("Extracted roadmap topic names:", roadmapTopicNames);
+      // REMOVED: console.log("All progress data:", allProgressData);
 
       setTotalTopics(roadmapTopicNames.length);
 
@@ -142,7 +166,7 @@ const ProgressAnalytics = () => {
       const filtered = allProgressData
         .filter((item) => {
           const match = roadmapTopicNames.includes(item.topic);
-          console.log(`Topic "${item.topic}" - Match: ${match}`);
+          // REMOVED: console.log(`Topic "${item.topic}" - Match: ${match}`);
           return match;
         })
         .reduce((acc, item) => {
@@ -165,7 +189,7 @@ const ProgressAnalytics = () => {
           return acc;
         }, []);
 
-      console.log("Filtered data:", filtered);
+      // REMOVED: console.log("Filtered data:", filtered);
       setFilteredData(filtered);
 
       // Calculate progress for this roadmap
@@ -175,7 +199,7 @@ const ProgressAnalytics = () => {
       // Calculate insights
       calculateInsights(filtered, allProgressData, roadmapTopicNames);
     } catch (err) {
-      console.error("Error filtering data:", err);
+      // REMOVED: console.error("Error filtering data:", err);
       setFilteredData([]);
     }
   }, [selectedRoadmap, allProgressData]);
@@ -282,7 +306,7 @@ const ProgressAnalytics = () => {
 
       setInsights(insightsList);
     } catch (error) {
-      console.error("Error calculating insights:", error);
+      // REMOVED: console.error("Error calculating insights:", error);
       setInsights(["📊 Analytics loading..."]);
     }
   };
@@ -290,17 +314,24 @@ const ProgressAnalytics = () => {
   // Handle roadmap selection
   const handleRoadmapChange = (e) => {
     const roadmapId = e.target.value;
-    console.log("Roadmap selection changed to:", roadmapId);
+    // REMOVED: console.log("Roadmap selection changed to:", roadmapId);
     setSelectedRoadmapId(roadmapId);
   };
 
   // Prepare data for charts
   const timelineData = (allProgressData || [])
     .filter((item) => selectedRoadmap?.topics?.includes(item.topic) && item.createdAt)
-    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+    // UPDATED: Use parseDate for safe date parsing
+    .sort((a, b) => {
+      const dateA = parseDate(a.createdAt);
+      const dateB = parseDate(b.createdAt);
+      if (!dateA || !dateB) return 0;
+      return dateA - dateB;
+    })
     .reduce((acc, item) => {
       try {
-        const date = item.createdAt?.split("T")[0] || "Unknown";
+        // UPDATED: Use safe formatDateOnly for date display
+        const date = formatDateOnly(item.createdAt);
         const existing = acc.find((d) => d.date === date);
         if (existing) {
           existing.avgAfter = (existing.avgAfter + (item.knowledgeAfter || 0)) / 2;
@@ -309,7 +340,7 @@ const ProgressAnalytics = () => {
         }
         return acc;
       } catch (e) {
-        console.error("Error processing timeline data:", e);
+        // REMOVED: console.error("Error processing timeline data:", e);
         return acc;
       }
     }, []);
@@ -342,60 +373,7 @@ const ProgressAnalytics = () => {
     <div className="dashboard-layout">
       <Sidebar />
       <main className="dashboard-main">
-        {/* Debug Info - Remove in production */}
-        <div style={{
-          background: "var(--bg-tertiary)",
-          padding: "1rem",
-          borderRadius: "8px",
-          marginBottom: "1rem",
-          fontSize: "0.85rem",
-          color: "var(--text-secondary)",
-          border: "1px solid var(--border-color)"
-        }}>
-          <details>
-            <summary style={{ cursor: "pointer", fontWeight: "600" }}>📊 Debug Info</summary>
-            <div style={{ marginTop: "0.5rem", fontFamily: "monospace", whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
-              <div>✅ Roadmaps loaded: {roadmaps.length}</div>
-              <div>✅ Selected Roadmap ID: {selectedRoadmapId}</div>
-              <div>✅ Progress entries: {allProgressData.length}</div>
-              <div>Filtered data: {filteredData.length > 0 ? `✅ ${filteredData.length}` : `❌ ${filteredData.length}`}</div>
-
-              <hr style={{ margin: "1rem 0", opacity: 0.3 }} />
-              <div style={{ fontWeight: "600", marginBottom: "0.5rem" }}>📋 ALL ROADMAPS OVERVIEW:</div>
-              {roadmaps.map((rm, idx) => (
-                <div key={idx} style={{ marginBottom: "1rem", padding: "0.5rem", background: "var(--bg-secondary)", borderRadius: "4px" }}>
-                  <div>🔹 Roadmap {idx + 1}: {rm.mainTopic} (ID: {rm._id || rm.id})</div>
-                  <div style={{ marginLeft: "1rem", fontSize: "0.8rem" }}>
-                    <div>Topics count: {rm.topics?.length || 0}</div>
-                    <div>Topics first 2: {JSON.stringify(rm.topics?.slice(0, 2)?.map(t => typeof t === "string" ? t : t?.topic))}</div>
-                  </div>
-                </div>
-              ))}
-
-              <hr style={{ margin: "1rem 0", opacity: 0.3 }} />
-              <div style={{ fontWeight: "600", marginBottom: "0.5rem" }}>📍 SELECTED ROADMAP DETAILS:</div>
-              {selectedRoadmap && (
-                <div style={{ background: "var(--bg-secondary)", padding: "0.5rem", borderRadius: "4px" }}>
-                  <div>Roadmap: {selectedRoadmap.mainTopic}</div>
-                  <div>Total Topics: {selectedRoadmap.topics?.length || 0}</div>
-                  <div style={{ marginTop: "0.5rem" }}>
-                    Sample topics:
-                    <pre>{JSON.stringify(selectedRoadmap.topics?.slice(0, 3), null, 2)}</pre>
-                  </div>
-                </div>
-              )}
-
-              <hr style={{ margin: "1rem 0", opacity: 0.3 }} />
-              <div style={{ fontWeight: "600", marginBottom: "0.5rem" }}>📊 PROGRESS DATA (All 6 entries):</div>
-              {allProgressData.map((item, idx) => (
-                <div key={idx} style={{ marginBottom: "0.5rem", padding: "0.5rem", background: "var(--bg-secondary)", borderRadius: "4px", fontSize: "0.8rem" }}>
-                  <strong>{idx + 1}. {item.topic}</strong>
-                  <div>Before: {item.knowledgeBefore} → After: {item.knowledgeAfter}</div>
-                </div>
-              ))}
-            </div>
-          </details>
-        </div>
+        {/* REMOVED: Debug Info section (lines 345-398) - Now production-ready */}
         {/* Header with Roadmap Selector */}
         <div className="analytics-header">
           <div className="analytics-title-section">

@@ -5,6 +5,8 @@ public class RegisterRequest {
     private String name;
     private String email;
     private String password;
+    
+    public RegisterRequest() {};
 
     // getters
     public String getName() {

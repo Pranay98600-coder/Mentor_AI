@@ -41,9 +41,12 @@ export const saveUserData = (userData) => {
 
 /**
  * Clear all authentication data from localStorage
+ * UPDATED: Removed email from logout (was missing in some places)
  */
 export const logout = () => {
-  localStorage.clear();
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+  localStorage.removeItem("email");
 };
 
 /**
@@ -58,4 +61,26 @@ export const getAuthHeader = () => {
     };
   }
   return {};
+};
+
+// ADDED: Safe date formatting utility
+export const formatDate = (dateString) => {
+  if (!dateString) {
+    return "No date available";
+  }
+
+  try {
+    const date = new Date(dateString);
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return "No date available";
+    }
+    // Format: "Mar 12, 2026, 2:30 PM"
+    return date.toLocaleString("en-IN", {
+      dateStyle: "medium",
+      timeStyle: "short"
+    });
+  } catch (error) {
+    return "No date available";
+  }
 };

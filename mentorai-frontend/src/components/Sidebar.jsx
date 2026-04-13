@@ -19,8 +19,10 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     logout();
-    // Force full app reload to ensure ProtectedRoute re-evaluates
-    window.location.href = "/login";
+    // UPDATED: Use navigate instead of window.location.href to avoid 404
+    // UPDATED: Redirect to "/" (landing page) instead of "/login"
+    // UPDATED: Use { replace: true } to prevent back-button access
+    navigate("/", { replace: true });
   };
 
   const linkVariants = {

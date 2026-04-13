@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { getMyRoadmaps, deleteRoadmap, regenerateRoadmap } from "../services/roadmapService";
+// ADDED: Import formatDate utility for safe date formatting
+import { formatDate } from "../utils/auth";
 import "../styles/profile.css";
 
 const Profile = () => {
@@ -20,7 +22,7 @@ const Profile = () => {
         const data = await getMyRoadmaps();
         setRoadmaps(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error("Error fetching roadmaps:", err);
+        // UPDATED: Removed console.error for cleaner production code
         setError("Failed to load roadmaps");
       } finally {
         setLoading(false);
@@ -150,7 +152,8 @@ const Profile = () => {
                   <div className="roadmap-card-header">
                     <h4 className="roadmap-title">{roadmap.mainTopic}</h4>
                     <span className="roadmap-date">
-                      {new Date(roadmap.createdAt).toLocaleDateString()}
+                      {/* UPDATED: Use formatDate to handle invalid dates safely */}
+                      {formatDate(roadmap.createdAt)}
                     </span>
                   </div>
 

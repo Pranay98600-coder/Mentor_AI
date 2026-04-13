@@ -7,6 +7,8 @@ import RoadmapCard from "../components/RoadmapCard";
 import ProgressBar from "../components/ProgressBar";
 import { getMyRoadmaps, updateProgress } from "../services/roadmapService";
 import { getProgress } from "../services/progressService";
+// ADDED: Import formatDate utility for safe date formatting
+import { formatDate } from "../utils/auth";
 import "../styles/dashboard.css";
 import "../styles/roadmap.css";
 
@@ -27,7 +29,7 @@ const Dashboard = () => {
         const data = await getMyRoadmaps();
         setRoadmaps(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error("Error fetching roadmaps:", err);
+        // UPDATED: Removed console.error for cleaner production code
         setError("Failed to load roadmaps");
       } finally {
         setLoading(false);
@@ -56,7 +58,7 @@ const Dashboard = () => {
 
         setProgressData(formatted);
       } catch (err) {
-        console.error("Failed to load progress:", err);
+        // UPDATED: Removed console.error for cleaner production code
         // Silently fail - progress is optional
       }
     };
@@ -92,7 +94,7 @@ const Dashboard = () => {
       await updateProgress(topicName, data.before, data.after);
       alert("✓ Progress updated successfully");
     } catch (error) {
-      console.error("Error updating progress:", error);
+      // UPDATED: Removed console.error for cleaner production code
       alert("Failed to update progress");
     }
   };
@@ -268,7 +270,8 @@ const Dashboard = () => {
                   <div className="roadmap-header-content">
                     <h4>{roadmap.mainTopic}</h4>
                     <span className="roadmap-header-date">
-                      {new Date(roadmap.createdAt).toLocaleDateString()}
+                      {/* UPDATED: Use formatDate to handle invalid dates safely */}
+                      {formatDate(roadmap.createdAt)}
                     </span>
                   </div>
                   <span className="roadmap-toggle-icon">

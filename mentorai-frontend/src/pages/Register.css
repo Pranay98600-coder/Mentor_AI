@@ -1,10 +1,13 @@
 /* Auth Card Styles */
 .auth-container {
-	min-height: 80vh;
+	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background: var(--bg-primary);
+	padding: 1rem;
+	/* ADDED: Responsive padding for mobile */
+	position: relative;
 }
 
 .auth-card {
@@ -15,9 +18,13 @@
 	display: flex;
 	flex-direction: column;
 	min-width: 320px;
-	max-width: 90vw;
+	max-width: 450px;
+	width: 100%;
+	/* ADDED: Responsive width */
 	gap: 1.2rem;
 	border: 1px solid var(--border-color);
+	/* ADDED: Smooth transitions on all properties */
+	transition: all 0.3s ease;
 }
 
 .auth-card h2 {
@@ -25,22 +32,36 @@
 	font-weight: 700;
 	margin-bottom: 0.5rem;
 	text-align: center;
+	font-size: 1.8rem;
+	/* ADDED: Responsive font size */
 }
 
 .auth-card input {
-	padding: 0.7rem 1rem;
+	padding: 0.75rem 1rem;
 	border-radius: 8px;
 	border: 1px solid var(--border-color);
 	font-size: 1rem;
 	outline: none;
-	transition: border 0.2s;
+	transition: all 0.2s ease;
 	background: var(--bg-tertiary);
 	color: var(--text-primary);
+	/* ADDED: Font smoothing for better readability */
+	-webkit-font-smoothing: antialiased;
 }
 
 .auth-card input:focus {
 	border: 1.5px solid var(--accent-primary);
 	box-shadow: var(--shadow-accent);
+	/* ADDED: Scale slightly for feedback */
+	transform: scale(1.01);
+}
+
+/* ADDED: Disabled input state (while loading) */
+.auth-card input:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+	background: var(--bg-tertiary);
+	color: var(--text-hint);
 }
 
 .auth-btn {
@@ -48,24 +69,131 @@
 	color: #fff;
 	border: none;
 	border-radius: 20px;
-	padding: 0.7rem 1.5rem;
+	padding: 0.8rem 1.5rem;
 	font-size: 1.1rem;
 	font-weight: 600;
 	cursor: pointer;
-	transition: background 0.2s;
+	transition: all 0.3s ease;
+	/* ADDED: Smooth transitions for all states */
+	width: 100%;
+	/* ADDED: Full width for better mobile UX */
 }
 
-.auth-btn:hover {
+.auth-btn:hover:not(:disabled) {
 	background: var(--accent-hover);
+	/* ADDED: Lift effect on hover */
+	transform: translateY(-2px);
+	box-shadow: 0 8px 16px rgba(124, 58, 237, 0.3);
+}
+
+.auth-btn:active:not(:disabled) {
+	transform: translateY(0);
+}
+
+/* ADDED: Disabled button state (while loading) */
+.auth-btn:disabled,
+.auth-btn.loading {
+	opacity: 0.8;
+	cursor: not-allowed;
+	background: var(--accent-primary);
+	pointer-events: none;
+}
+
+/* ADDED: Spin animation for loading indicator */
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
 }
 
 .auth-error {
 	color: var(--msg-error-text);
 	background: var(--msg-error-bg);
 	border-radius: 8px;
-	padding: 0.5rem 1rem;
+	padding: 0.8rem 1rem;
 	margin-bottom: 0.5rem;
 	text-align: center;
-	font-size: 0.98rem;
+	font-size: 0.95rem;
+	/* ADDED: Smooth animation */
+	animation: slideDown 0.3s ease;
+	/* ADDED: Better text contrast */
+	line-height: 1.5;
+	word-wrap: break-word;
 }
+
+/* ADDED: Slide down animation for error */
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* ADDED: Mobile responsive styles */
+@media (max-width: 768px) {
+	.auth-card {
+		padding: 2rem 1.5rem;
+		min-width: 100%;
+		max-width: 100%;
+		border-radius: 14px;
+	}
+
+	.auth-card h2 {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.auth-card input {
+		padding: 0.7rem 0.9rem;
+		font-size: 16px;
+		/* ADDED: Prevent zoom on iOS */
+	}
+
+	.auth-btn {
+		padding: 0.75rem 1.25rem;
+		font-size: 1rem;
+	}
+}
+
+/* ADDED: Extra small devices (mobile phones) */
+@media (max-width: 480px) {
+	.auth-container {
+		padding: 0.75rem;
+		min-height: 100vh;
+		/* ADDED: Ensure full viewport height */
+	}
+
+	.auth-card {
+		padding: 1.5rem 1rem;
+		gap: 1rem;
+		max-width: 100%;
+	}
+
+	.auth-card h2 {
+		font-size: 1.3rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.auth-card input {
+		padding: 0.65rem 0.8rem;
+		font-size: 16px;
+		border-radius: 6px;
+	}
+
+	.auth-btn {
+		padding: 0.65rem 1rem;
+		font-size: 0.95rem;
+		border-radius: 16px;
+	}
+
+	.auth-error {
+		padding: 0.6rem 0.8rem;
+		font-size: 0.9rem;
+		margin-bottom: 0.4rem;
+	}
+}
+
 @import "./Login.css";

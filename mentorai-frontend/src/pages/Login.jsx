@@ -10,6 +10,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  // ADDED: Loading state for API requests
+  const [isLoading, setIsLoading] = useState(false);
+  // ADDED: Retry counter for Render cold start handling
+  const [retryCount, setRetryCount] = useState(0);
   const navigate = useNavigate();
 
   // Redirect to dashboard if already logged in
@@ -20,31 +24,46 @@ const Login = () => {
     }
   }, [navigate]);
 
+  // ADDED: Retry logic for Render cold start
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    // Debug: Log the data being sent
-    console.log("Login attempt:", {
-      email: email.trim(),
-      password: password.trim()
-    });
+    const submitForm = async (attempt = 0) => {
+      setIsLoading(true);
 
-    try {
-      const data = await login(email.trim(), password.trim());
+      try {
+        const data = await login(email.trim(), password.trim());
 
-      // Save user data using centralized utility
-      saveUserData({
-        token: data.token,
-        username: data.username,
-        email: data.email,
-      });
+        // Save user data using centralized utility
+        saveUserData({
+          token: data.token,
+          username: data.username,
+          email: data.email,
+        });
 
-      navigate("/dashboard");
-    } catch (err) {
-      console.error("Login error:", err.response?.data);
-      setError(err.response?.data?.message || "Login failed");
-    }
+        navigate("/dashboard");
+      } catch (err) {
+        // ADDED: Retry once on first failure (cold start handling)
+        if (attempt === 0 && err.response?.status === 503) {
+          setError("🚀 Waking up server, please wait...");
+          setRetryCount(1);
+          setTimeout(() => submitForm(1), 2000);
+          return;
+        }
+
+        // UPDATED: Improved error message handling
+        const errorMessage = err.response?.data?.message ||
+                           err.message ||
+                           "Login failed. Please check your credentials.";
+        setError(errorMessage);
+        setRetryCount(0);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    submitForm();
   };
 
   return (
@@ -106,6 +125,8 @@ const Login = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          // ADDED: Disable input while loading
+          disabled={isLoading}
           required
           whileFocus={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
@@ -115,18 +136,30 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          // ADDED: Disable input while loading
+          disabled={isLoading}
           required
           whileFocus={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
         />
         <motion.button
           type="submit"
-          className="auth-btn"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          // UPDATED: Add loading state class and disable button
+          className={`auth-btn ${isLoading ? "loading" : ""}`}
+          disabled={isLoading}
+          whileHover={!isLoading ? { scale: 1.05 } : {}}
+          whileTap={!isLoading ? { scale: 0.95 } : {}}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          Login
+          {/* ADDED: Show loading text while submitting */}
+          {isLoading ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
+              <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>⟳</span>
+              {retryCount === 1 ? "Retrying..." : "Logging in..."}
+            </span>
+          ) : (
+            "Login"
+          )}
         </motion.button>
         
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginTop: "1rem" }}>

@@ -10,6 +10,10 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  // ADDED: Loading state for API requests
+  const [isLoading, setIsLoading] = useState(false);
+  // ADDED: Retry counter for Render cold start handling
+  const [retryCount, setRetryCount] = useState(0);
   const navigate = useNavigate();
 
   // Redirect to dashboard if already logged in
@@ -20,24 +24,38 @@ const Register = () => {
     }
   }, [navigate]);
 
+  // ADDED: Retry logic for Render cold start
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    // Debug: Log the data being sent
-    console.log("Register attempt:", {
-      name: name.trim(),
-      email: email.trim(),
-      password: password.trim()
-    });
+    const submitForm = async (attempt = 0) => {
+      setIsLoading(true);
 
-    try {
-      await register(name.trim(), email.trim(), password.trim());
-      navigate("/login");
-    } catch (err) {
-      console.error("Registration error:", err.response?.data);
-      setError(err.response?.data?.message || "Registration failed");
-    }
+      try {
+        await register(name.trim(), email.trim(), password.trim());
+        navigate("/login");
+      } catch (err) {
+        // ADDED: Retry once on first failure (cold start handling)
+        if (attempt === 0 && err.response?.status === 503) {
+          setError("🚀 Waking up server, please wait...");
+          setRetryCount(1);
+          setTimeout(() => submitForm(1), 2000);
+          return;
+        }
+
+        // UPDATED: Improved error message handling
+        const errorMessage = err.response?.data?.message ||
+                           err.message ||
+                           "Registration failed. Please try again.";
+        setError(errorMessage);
+        setRetryCount(0);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    submitForm();
   };
 
   return (
@@ -99,6 +117,8 @@ const Register = () => {
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          // ADDED: Disable input while loading
+          disabled={isLoading}
           required
           whileFocus={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
@@ -108,6 +128,8 @@ const Register = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          // ADDED: Disable input while loading
+          disabled={isLoading}
           required
           whileFocus={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
@@ -117,18 +139,30 @@ const Register = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          // ADDED: Disable input while loading
+          disabled={isLoading}
           required
           whileFocus={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
         />
         <motion.button
           type="submit"
-          className="auth-btn"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          // UPDATED: Add loading state class and disable button
+          className={`auth-btn ${isLoading ? "loading" : ""}`}
+          disabled={isLoading}
+          whileHover={!isLoading ? { scale: 1.05 } : {}}
+          whileTap={!isLoading ? { scale: 0.95 } : {}}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          Register
+          {/* ADDED: Show loading text while submitting */}
+          {isLoading ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
+              <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>⟳</span>
+              {retryCount === 1 ? "Retrying..." : "Registering..."}
+            </span>
+          ) : (
+            "Register"
+          )}
         </motion.button>
         
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginTop: "1rem" }}>

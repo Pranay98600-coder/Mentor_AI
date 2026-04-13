@@ -7,6 +7,8 @@
   background: var(--bg-primary);
   position: relative;
   overflow: hidden;
+  padding: 1rem;
+  /* ADDED: Responsive padding */
 }
 
 .auth-container::before {
@@ -42,11 +44,16 @@
   display: flex;
   flex-direction: column;
   min-width: 350px;
-  max-width: 90vw;
+  max-width: 450px;
+  /* UPDATED: Better max-width for responsiveness */
+  width: 100%;
+  /* ADDED: Full width on small screens */
   gap: 20px;
   position: relative;
   z-index: 1;
   border: 1px solid var(--border-color);
+  /* ADDED: Smooth transitions */
+  transition: all 0.3s ease;
 }
 
 .auth-card h2 {
@@ -58,6 +65,7 @@
   margin-bottom: 0.5rem;
   text-align: center;
   font-size: 1.8rem;
+  /* ADDED: Responsive font size */
 }
 
 .auth-card input {
@@ -79,6 +87,16 @@
   border-color: var(--accent-primary);
   box-shadow: var(--shadow-accent);
   background: var(--bg-secondary);
+  /* ADDED: Visual feedback */
+  transform: scale(1.01);
+}
+
+/* ADDED: Disabled input state (while loading) */
+.auth-card input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: var(--bg-tertiary);
+  color: var(--text-hint);
 }
 
 .auth-btn {
@@ -93,15 +111,26 @@
   transition: all var(--transition-base);
   box-shadow: var(--shadow-accent);
   margin-top: 10px;
+  /* ADDED: Full width for better mobile UX */
+  width: 100%;
 }
 
-.auth-btn:hover {
+.auth-btn:hover:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: var(--shadow-accent-hover);
 }
 
-.auth-btn:active {
+.auth-btn:active:not(:disabled) {
   transform: translateY(-1px);
+}
+
+/* ADDED: Disabled and loading button states */
+.auth-btn:disabled,
+.auth-btn.loading {
+  opacity: 0.8;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none;
 }
 
 .auth-error {
@@ -114,4 +143,163 @@
   font-size: 0.95rem;
   border: 1px solid rgba(239, 68, 68, 0.3);
   font-weight: 500;
+  /* ADDED: Animation for error display */
+  animation: slideDown 0.3s ease;
+  /* ADDED: Better text wrapping */
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+
+/* ADDED: Spin animation for loading indicator */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ADDED: Slide down animation for errors */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ADDED: Back button responsive styles */
+.auth-back-btn {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid #8b5cf6;
+  color: #8b5cf6;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.auth-back-btn:hover {
+  background: rgba(139, 92, 246, 0.25);
+  transform: scale(1.05);
+}
+
+.auth-back-btn:active {
+  transform: scale(0.95);
+}
+
+/* ADDED: Tablet responsive styles (768px and below) */
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 32px 24px;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: var(--radius-lg);
+    gap: 16px;
+  }
+
+  .auth-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .auth-card input {
+    padding: 11px 14px;
+    font-size: 1rem;
+  }
+
+  .auth-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+
+  /* ADDED: Responsive back button */
+  .auth-back-btn {
+    top: 1.5rem;
+    left: 1.5rem;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    gap: 6px;
+  }
+
+  .auth-error {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
+/* ADDED: Mobile phone styles (480px and below) */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 0.75rem;
+    min-height: 100vh;
+  }
+
+  .auth-container::before,
+  .auth-container::after {
+    /* Hide decorative elements on mobile */
+    display: none;
+  }
+
+  .auth-card {
+    padding: 24px 16px;
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+    gap: 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .auth-card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .auth-card input {
+    padding: 10px 12px;
+    font-size: 16px;
+    /* Prevent iOS zoom on focus */
+    border-radius: 6px;
+  }
+
+  .auth-btn {
+    padding: 11px 20px;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    border-radius: 16px;
+  }
+
+  /* ADDED: Back button for mobile */
+  .auth-back-btn {
+    top: 1rem;
+    left: 1rem;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    gap: 4px;
+    border-radius: 6px;
+  }
+
+  .auth-error {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+    border-radius: 6px;
+  }
+
+  /* ADDED: Better touch targets on mobile */
+  .auth-card input,
+  .auth-btn {
+    min-height: 44px;
+    /* Minimum touch target size */
+  }
 }

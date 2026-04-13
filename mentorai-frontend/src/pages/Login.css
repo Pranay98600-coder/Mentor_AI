@@ -1,32 +1,192 @@
-/* Error message style for login */
+/* Login Container & Card Styles */
 .auth-error {
-  color: var(--msg-error-text);
-  background: var(--msg-error-bg);
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  font-size: 0.98rem;
-}
-.auth-container{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background: var(--bg-primary);
+	color: var(--msg-error-text);
+	background: var(--msg-error-bg);
+	border-radius: 8px;
+	padding: 0.8rem 1rem;
+	margin-bottom: 0.5rem;
+	text-align: center;
+	font-size: 0.95rem;
+	/* ADDED: Smooth animation */
+	animation: slideDown 0.3s ease;
+	/* ADDED: Better text contrast */
+	line-height: 1.5;
+	word-wrap: break-word;
 }
 
-.auth-card{
-  background: var(--bg-secondary);
-  padding:30px;
-  width:350px;
-  border-radius:10px;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-color);
+.auth-container {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--bg-primary);
+	/* ADDED: Responsive padding */
+	padding: 1rem;
 }
 
-.auth-card h2{
-  text-align:center;
-  margin-bottom:20px;
-  color: var(--text-primary);
+.auth-card {
+	background: var(--bg-secondary);
+	padding: 2.5rem 2rem;
+	width: 100%;
+	max-width: 450px;
+	/* UPDATED: Responsive width */
+	border-radius: 14px;
+	box-shadow: var(--shadow-lg);
+	border: 1px solid var(--border-color);
+	/* ADDED: Smooth transitions */
+	transition: all 0.3s ease;
+	display: flex;
+	flex-direction: column;
+	gap: 1.2rem;
+}
+
+.auth-card h2 {
+	text-align: center;
+	margin-bottom: 0.5rem;
+	color: var(--accent-primary);
+	/* UPDATED: Responsive font size */
+	font-size: 1.8rem;
+	font-weight: 700;
+}
+
+/* ADDED: Input field improvements */
+.auth-card input {
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	border: 1px solid var(--border-color);
+	font-size: 1rem;
+	outline: none;
+	transition: all 0.2s ease;
+	background: var(--bg-tertiary);
+	color: var(--text-primary);
+	-webkit-font-smoothing: antialiased;
+}
+
+.auth-card input:focus {
+	border: 1.5px solid var(--accent-primary);
+	box-shadow: var(--shadow-accent);
+	transform: scale(1.01);
+}
+
+/* ADDED: Disabled input state */
+.auth-card input:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+	background: var(--bg-tertiary);
+	color: var(--text-hint);
+}
+
+/* ADDED: Button improvements for loading states */
+.auth-btn {
+	background: var(--accent-primary);
+	color: #fff;
+	border: none;
+	border-radius: 20px;
+	padding: 0.8rem 1.5rem;
+	font-size: 1.1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	width: 100%;
+	/* ADDED: Full width for consistent mobile UX */
+}
+
+.auth-btn:hover:not(:disabled) {
+	background: var(--accent-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 16px rgba(124, 58, 237, 0.3);
+}
+
+.auth-btn:active:not(:disabled) {
+	transform: translateY(0);
+}
+
+/* ADDED: Disabled button state (while loading) */
+.auth-btn:disabled,
+.auth-btn.loading {
+	opacity: 0.8;
+	cursor: not-allowed;
+	background: var(--accent-primary);
+	pointer-events: none;
+}
+
+/* ADDED: Spin animation for loading indicator */
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+/* ADDED: Slide animation for error messages */
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* ADDED: Tablet responsive styles */
+@media (max-width: 768px) {
+	.auth-card {
+		padding: 2rem 1.5rem;
+		max-width: 100%;
+		border-radius: 12px;
+	}
+
+	.auth-card h2 {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.auth-card input {
+		padding: 0.7rem 0.9rem;
+		font-size: 16px;
+		/* Prevent iOS zoom */
+	}
+
+	.auth-btn {
+		padding: 0.75rem 1.25rem;
+		font-size: 1rem;
+	}
+}
+
+/* ADDED: Mobile phone styles */
+@media (max-width: 480px) {
+	.auth-container {
+		padding: 0.75rem;
+		min-height: 100vh;
+	}
+
+	.auth-card {
+		padding: 1.5rem 1rem;
+		gap: 1rem;
+		max-width: 100%;
+		width: 100%;
+	}
+
+	.auth-card h2 {
+		font-size: 1.3rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.auth-card input {
+		padding: 0.65rem 0.8rem;
+		font-size: 16px;
+		border-radius: 6px;
+	}
+
+	.auth-btn {
+		padding: 0.65rem 1rem;
+		font-size: 0.95rem;
+		border-radius: 16px;
+	}
+
+	.auth-error {
+		padding: 0.6rem 0.8rem;
+		font-size: 0.9rem;
+		margin-bottom: 0.4rem;
+	}
 }

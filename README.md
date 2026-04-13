@@ -1,12 +1,21 @@
-🚀 MentorAI – Full Stack AI Learning Platform
+🚀 MentorAI – AI-Powered Learning Platform
 
-MentorAI is an AI-powered learning assistant that helps users generate personalized learning roadmaps, track progress, and access curated YouTube resources — all in one platform.
+MentorAI is an intelligent learning assistant that helps users generate personalized learning roadmaps, track progress, and learn from curated YouTube resources — all in one place.
 
-It combines Spring Boot backend + React frontend with JWT-based authentication to deliver a complete full-stack learning system.
+Built using a Spring Boot backend + React frontend, MentorAI demonstrates a complete real-world full-stack architecture with secure JWT authentication, AI integration, and modern UI/UX.
 
 ---
 
-🧠 Key Features
+🌐 Live Demo Access
+
+You can explore the application using demo credentials:
+
+📧 Email: demouser@gmail.com
+🔑 Password: 123456
+
+---
+
+🧠 Core Features
 
 🔐 Authentication & Security
 
@@ -15,32 +24,49 @@ It combines Spring Boot backend + React frontend with JWT-based authentication t
 - Stateless Security Architecture
 - Password Encryption using BCrypt
 - Role-Based Authorization (USER / ADMIN)
+- Protected API Routes & Frontend Navigation
 
 ---
 
 🗺️ AI-Powered Learning System
 
-- Personalized Roadmap Generation
-- Topic-wise Learning Structure
-- YouTube Video Recommendations per topic
-- Fallback roadmap logic (for development phase)
+- Personalized Learning Roadmap Generation
+- Topic-wise structured learning paths
+- Integrated YouTube video recommendations
+- Fallback roadmap generation (when AI unavailable)
+- Scalable design for Gemini AI integration
 
 ---
 
-📊 Progress Tracking
+📊 Progress Tracking System
 
-- Track knowledge before and after learning
+- Track knowledge before vs after learning
 - Topic-wise progress updates
-- Persistent progress storage in database
+- Persistent progress stored in database
+- Designed for future analytics & visualization
 
 ---
 
 🧾 User Dashboard (Frontend)
 
-- Clean UI with Dashboard & Sidebar
-- Empty state for new users (Generate Roadmap)
-- Display saved roadmaps for existing users
-- Protected routes using JWT
+- Modern UI with sidebar navigation
+- Dashboard displaying:
+  - Learning insights
+  - Strong areas
+  - Focus areas
+- Empty state for new users
+- View and manage generated roadmaps
+- Fully responsive design
+
+---
+
+🎯 Learning Insights Engine
+
+- Smart feedback based on progress
+- Highlights:
+  - Strengths (e.g., JavaScript Fundamentals)
+  - Weak areas (e.g., CSS Fundamentals)
+- Motivational insights (streaks, progress tips)
 
 ---
 
@@ -49,6 +75,7 @@ It combines Spring Boot backend + React frontend with JWT-based authentication t
 - View all users
 - Delete users
 - Promote USER → ADMIN
+- Secure role-based access control
 
 ---
 
@@ -59,29 +86,32 @@ It combines Spring Boot backend + React frontend with JWT-based authentication t
 - Java 21
 - Spring Boot
 - Spring Security (JWT)
-- Spring Data JPA
+- Spring Data JPA (Hibernate)
 - Maven
 
 🎨 Frontend
 
 - React.js
 - Axios
-- CSS (Modular styling)
+- CSS (Modular Styling)
+- React Router
 
 🗄️ Database
 
-- MySQL
+- PostgreSQL (Production - Render)
+- MySQL (Local Development)
 
 🤖 AI & External APIs
 
-- Google Gemini API (setup done, fallback used)
-- YouTube Data API (for video recommendations)
+- Google Gemini API (Integration ready, fallback active)
+- YouTube Data API (video recommendations)
 
 ---
 
 📂 Project Structure
 
 MentorAI/
+│
 ├── mentorai-backend/
 │   ├── config/
 │   ├── controller/
@@ -90,7 +120,7 @@ MentorAI/
 │   ├── repository/
 │   ├── security/
 │   ├── service/
-│   └── main application
+│   └── MentoraiBackendApplication.java
 │
 ├── mentorai-frontend/
 │   ├── components/
@@ -166,25 +196,25 @@ POST "/api/progress/update"
 2. User logs in → "/api/auth/login"
 3. Server generates JWT token
 4. Token stored in frontend (localStorage)
-5. Token sent in every request:
+5. Token sent with every request:
 
 Authorization: Bearer TOKEN
 
-6. JWT filter validates token
-7. User accesses protected APIs
+6. JWT filter validates request
+7. Access granted to protected APIs
 
 ---
 
-🗄️ Database Tables
+🗄️ Database Schema
 
-- users
-- roadmap
-- roadmap_topic
-- topic_progress
+- users → stores user credentials & roles
+- roadmap → stores generated roadmap
+- roadmap_topic → individual topics inside roadmap
+- topic_progress → user learning progress
 
 ---
 
-▶️ How to Run
+▶️ How to Run Locally
 
 🔧 Backend
 
@@ -209,38 +239,50 @@ http://localhost:5173
 
 ---
 
+🚀 Deployment
+
+- Backend: Render
+- Frontend: Vercel
+- Database: PostgreSQL (Render)
+
+---
+
 🚧 Current Status
 
 ✅ Completed
 
-- Authentication (JWT)
+- JWT Authentication System
 - Role-Based Authorization
 - Roadmap Generation
-- Roadmap Storage (DB)
-- YouTube Video Integration (with fallback)
+- Roadmap Persistence (Database)
+- YouTube Integration (Fallback Supported)
 - Progress Tracking System
-- Full Frontend UI (Dashboard + Auth + Generate Roadmap)
+- AI-powered dynamic roadmap generation (Gemini)
+- Smart prompt-based roadmap customization
+- AI Chat Assistant
+- Progress analytics dashboard (charts & graphs)
+- Full Frontend UI (Auth + Dashboard + Roadmaps)
 - Backend ↔ Frontend Integration
+- Deployment (Render + Vercel)
 
 ---
 
 🚀 Upcoming Features
 
-- AI-based dynamic roadmap generation (Gemini integration)
-- Smart prompt-based roadmap creation
-- AI Chat Assistant
-- Progress analytics dashboard (charts)
-- Deployment (AWS / Render / Vercel)
+
+- Notifications & reminders
+- Advanced recommendation engine
 
 ---
 
 💡 Key Learnings
 
-- Implemented JWT-based secure authentication
-- Designed REST APIs with layered architecture (Controller → Service → Repository)
+- Implemented secure JWT authentication
+- Built scalable REST APIs using layered architecture
 - Solved circular JSON issues using "@JsonIgnore"
-- Handled CORS & frontend-backend integration
-- Built full-stack application with real-world structure
+- Handled CORS and frontend-backend integration
+- Managed real-world deployment issues (Render cold start, routing)
+- Built a complete production-style full-stack application
 
 ---
 
@@ -253,4 +295,13 @@ Java Full Stack Developer
 
 ⭐ Project Vision
 
-To build an intelligent learning assistant that guides users step-by-step in mastering any skill using AI, structured roadmaps, and real-world resources.
+To build an intelligent AI-powered learning assistant that helps users master any skill through:
+
+- Structured roadmaps
+- Personalized insights
+- Real-world resources
+- Smart progress tracking
+
+MentorAI aims to become a complete guided learning ecosystem powered by AI.
+
+---
